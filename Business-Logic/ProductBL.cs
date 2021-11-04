@@ -12,9 +12,9 @@ namespace Business_Logic
         {
             _repo = p_repo;
         }
-        public List<Products> SearchByCategory(string p_category)
+        public List<Product> SearchByCategory(string p_category)
         {
-            List<Products> products = _repo.GetAllProducts();
+            List<Product> products = _repo.GetAllProducts();
             return products.Where(prod => prod.Category.ToLower().Contains(p_category.ToLower())).ToList();
         }
     }

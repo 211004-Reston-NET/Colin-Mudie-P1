@@ -11,6 +11,6 @@ namespace Business_Logic
         /// </summary>
         /// <param name="p_category"> the category that will be searched for. </param>
         /// <returns> returns a list of products only containing a Category matching p_category. </returns>
-        List<Products> SearchByCategory(string p_category);
+        List<Product> SearchByCategory(string p_category);
     }
 }

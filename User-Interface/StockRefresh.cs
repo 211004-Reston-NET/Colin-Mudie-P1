@@ -54,7 +54,7 @@ namespace User_Interface
                             {
                                 int _inputQuantity = int.Parse(Console.ReadLine().Trim());
                                 // edit db here.
-                                _lineItems.RefreshStock(lineItemsSearch.LineItemId, _inputQuantity);
+                                _lineItems.RefreshStock(lineItemsSearch.LineItemsId, _inputQuantity);
                             }
                             catch (System.FormatException)
                             {

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebUI.Models.StoreFrontVM>
+
+<h1>List of Stores</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    @foreach (StoreFrontVM store in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => store.StoreFrontId)</td>
+            <td>@Html.DisplayFor(modelItem => store.Name)</td>
+            <td>@Html.DisplayFor(modelItem => store.Address)</td>
+        </tr>
+    }
+</table>

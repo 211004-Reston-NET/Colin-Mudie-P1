@@ -140,11 +140,11 @@ namespace MMTest
         public void OrdersShouldSetValidData()
         {
             Customer _customerTest = new Customer();
-            Orders _order = new Orders();
+            Order _order = new Order();
             
-            _customerTest.Orders.Add(_order);
-            Assert.NotNull(_customerTest.Orders);
-            Assert.Equal(_customerTest.Orders[0], _order);
+            _customerTest.Order.Add(_order);
+            Assert.NotNull(_customerTest.Order);
+            Assert.Equal(_customerTest.Order[0], _order);
         }
     }
 }

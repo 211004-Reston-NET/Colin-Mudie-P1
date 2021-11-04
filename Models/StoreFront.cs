@@ -9,7 +9,7 @@ namespace Models
         private string _name;
         private string _address;
         private List<LineItems> _lineItems;
-        private List<Orders> _orders;
+        private List<Order> _order;
         public int StoreFrontId { get; set; }
 
         //properties
@@ -45,15 +45,15 @@ namespace Models
                 _lineItems = value;
             }
         }
-        public List<Orders> Orders
+        public List<Order> Order
         {
             get
             {
-                return _orders;
+                return _order;
             }
             set
             {
-                _orders = value;
+                _order = value;
             }
         }
 

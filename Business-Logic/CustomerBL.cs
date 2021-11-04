@@ -49,7 +49,7 @@ namespace Business_Logic
             return listOfCustomers.FirstOrDefault(cust => cust.Name == p_name && cust.Email == p_email);
         }
 
-        public Orders PlaceOrder(Customer p_customer, Orders P_order)
+        public Order PlaceOrder(Customer p_customer, Order P_order)
         {   
             return _repo.PlaceOrder(p_customer, P_order);
         }

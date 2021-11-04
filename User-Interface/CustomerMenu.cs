@@ -18,7 +18,7 @@ namespace User_Interface
                             $" \nAddress - {SingletonCustomer.customer.Address}" +
                             $" \nEmail - {SingletonCustomer.customer.Email}" +
                             $" \nPhone - {SingletonCustomer.customer.PhoneNumber}" +
-                            $" \nPrevious Orders - {SingletonCustomer.customer.Orders.Count}"+
+                            $" \nPrevious Orders - {SingletonCustomer.customer.Order.Count}"+
                             "  \n-------------------------" +
                             "\n   [1] - Edit Name" +
                             "\n   [2] - Edit Address" +

@@ -6,7 +6,7 @@ namespace User_Interface
     public class SingletonCustomer
     {
         public static Customer customer = new Customer();
-        public static Orders orders = new Orders();
+        public static Order orders = new Order();
         public static string location { get; set; }
 
             //when searching previous orders is it for store or customer?

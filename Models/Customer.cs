@@ -12,7 +12,7 @@ namespace Models
         private string _address;
         private string _email;
         private string _phoneNumber;
-        private List<Orders> _orders = new List<Orders>();
+        private List<Order> _order = new List<Order>();
         public int CustomerId { get; set; }
 
         public string Name
@@ -66,10 +66,10 @@ namespace Models
                 _phoneNumber = value;
             }
         }
-        public List<Orders> Orders
+        public List<Order> Order
         {
-            get { return _orders; }
-            set { _orders = value; }
+            get { return _order; }
+            set { _order = value; }
         }
 
         public override string ToString()

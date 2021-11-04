@@ -15,7 +15,7 @@ namespace User_Interface
         
         public void Menu()
         {
-            List<Orders> listOfOrders = _orderBL.GetOrdersList(SingletonCustomer.orderType, SingletonCustomer.storeOrCustID);
+            List<Order> listOfOrders = _orderBL.GetOrdersList(SingletonCustomer.orderType, SingletonCustomer.storeOrCustID);
             int _count = 0;
             if (SingletonCustomer.orderType == "customer" ){
                 Console.WriteLine($"We have found {listOfOrders.Count} orders from {SingletonCustomer.customer.Name}" +
@@ -24,7 +24,7 @@ namespace User_Interface
                 Console.WriteLine($"We have found {listOfOrders.Count} orders from {SingletonCustomer.location}" +
                             "\n-------------------------");
             }
-            foreach (Orders ord in listOfOrders)
+            foreach (Order ord in listOfOrders)
             {
                 _count++;
                 Console.WriteLine($"\n   Order {_count}");

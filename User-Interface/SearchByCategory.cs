@@ -18,9 +18,9 @@ namespace User_Interface
             Console.WriteLine($"View Products by Category." +
                             $"\n   Current Category: {_search}" +
                             "\n-------------------------");
-            List<Products> listOfProducts = _productBL.SearchByCategory(_search);
+            List<Product> listOfProducts = _productBL.SearchByCategory(_search);
 
-            foreach (Products prod in listOfProducts)
+            foreach (Product prod in listOfProducts)
             {
                 Console.WriteLine(prod);
                 Console.WriteLine("-------------------------");
