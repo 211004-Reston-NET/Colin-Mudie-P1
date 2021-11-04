@@ -17,7 +17,7 @@ You will be able to:
 
 
 ## User Story
-Given I am a poor sould looking to get into an expensive hobby,   
+Given I am a poor soul looking to get into an expensive hobby,   
 I want an app that allows me to purchase the resources needed to begin a modular journey. 
 When I open the app  
 Then I am asked to Log In to my own account or Create a new one   
