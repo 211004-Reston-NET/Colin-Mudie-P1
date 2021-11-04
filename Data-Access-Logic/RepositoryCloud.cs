@@ -46,36 +46,12 @@ namespace Data_Access_Logic
 
         public List<Product> GetAllProducts()
         {
-            return _context.Products.Select(prod => 
-            new Product()
-            {
-                Name = prod.Name,
-                Price = prod.Price,
-                Description = prod.Description,
-                Brand = prod.Brand,
-                Category = prod.Category,
-                ProductId = prod.ProductId
-            }
-            ).ToList();
+            return _context.Products.ToList();
         }
 
         public List<Customer> GetCustomerList()
         {
-            return _context.Customers.Select(cust => 
-            new Customer()
-            {
-                Name = cust.Name,
-                Email = cust.Email,
-                Address = cust.Address,
-                PhoneNumber = cust.PhoneNumber,
-                CustomerId = cust.CustomerId,
-                Order = cust.Order.Select(order => new Order(){
-                    OrderId = order.OrderId,
-                    Address = order.Address,
-                    TotalPrice = order.TotalPrice
-                }).ToList()
-            }
-            ).ToList();
+            return _context.Customers.ToList();
         }
 
         public int GetLastOrderId()
@@ -97,24 +73,7 @@ namespace Data_Access_Logic
         }
         public List<LineItems> GetLineItemsList(int p_storeId)
         {
-            return _context.LineItems
-            .Where(item => item.StoreFront.StoreFrontId == p_storeId)
-            .Select(item => 
-                new LineItems()
-                {
-                    Product = new Product(){
-                        Name = item.Product.Name,
-                        Price = item.Product.Price,
-                        Description = item.Product.Description,
-                        Brand = item.Product.Brand,
-                        Category = item.Product.Category,
-                        ProductId = item.Product.ProductId
-                    },
-                    Quantity = item.Quantity,
-                    LineItemsId = item.LineItemsId,
-                    StoreFrontId = item.StoreFrontId
-                }
-            ).ToList();
+            return _context.LineItems.Where(item => item.StoreFront.StoreFrontId == p_storeId).ToList();
         }
 
         public List<Order> GetOrdersList(string p_customer_or_store, int p_id)
@@ -124,30 +83,10 @@ namespace Data_Access_Logic
             {
                 case "store":
                     return _context.Orders
-                    .Where(order => order.StoreFrontId == p_id)
-                    .Select(order => 
-                        new Order()
-                        {
-                            Address = order.Address,
-                            OrderId = order.OrderId,
-                            StoreFrontId = order.StoreFrontId,
-                            CustomerId = order.CustomerId,
-                            TotalPrice = order.TotalPrice
-                            }
-                        ).ToList();
+                    .Where(order => order.StoreFrontId == p_id).ToList();
                 case "customer":
                     return _context.Orders
-                    .Where(order => order.CustomerId == p_id)
-                    .Select(order =>
-                        new Order()
-                        {
-                            Address = order.Address,
-                            OrderId = order.OrderId,
-                            StoreFrontId = order.StoreFrontId,
-                            CustomerId = order.CustomerId,
-                            TotalPrice = order.TotalPrice
-                        }
-                    ).ToList();
+                    .Where(order => order.CustomerId == p_id).ToList();
                 default:
                     return null;
             }
@@ -155,50 +94,12 @@ namespace Data_Access_Logic
 
         public Product GetProductByProductId(int p_productId)
         {
-            var result = _context.Products
-                .FirstOrDefault<Product>(prod => prod.ProductId == p_productId);
-            return new Product()
-                {
-                    Name = result.Name,
-                    Price = result.Price,
-                    Description = result.Description,
-                    Brand = result.Brand,
-                    Category = result.Category,
-                    ProductId = result.ProductId
-                };
-            
+            return _context.Products.FirstOrDefault<Product>(prod => prod.ProductId == p_productId);            
         }
 
         public List<StoreFront> GetStoreFrontList()
         {
-            return _context.Storefronts.Select(store => 
-                // converting Entities Storefront to StoreFront
-                new StoreFront()
-                {
-                    Name = store.Name,
-                    Address = store.Address,
-                        // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
-                    LineItems = store.LineItems.Select(item => new LineItems(){
-                        Quantity = item.Quantity,
-                        Product = new Product(){
-                            Name = item.Product.Name,
-                            Price = item.Product.Price,
-                            Description = item.Product.Description,
-                            Brand = item.Product.Brand,
-                            Category = item.Product.Category,
-                            ProductId = item.Product.ProductId
-                        }, 
-                        LineItemsId = item.LineItemsId
-                    }).ToList(),
-                        // 
-                    Order = store.Order.Select(order => new Order(){
-                        OrderId = order.OrderId,
-                        Address = order.Address,
-                        TotalPrice = order.TotalPrice
-                    }).ToList(),
-                    StoreFrontId = store.StoreFrontId
-                }
-            ).ToList();
+            return _context.Storefronts.ToList();
         }
 
         public Order PlaceOrder(Customer p_customer, Order p_order)
@@ -231,7 +132,6 @@ namespace Data_Access_Logic
 
         public void UpdateStock(int p_orderId, Order p_order)
         {
-
             foreach (LineItems item in p_order.LineItems)
             {
                 // add each item to the order using line_item_order
@@ -240,12 +140,10 @@ namespace Data_Access_Logic
                     LineItemsId = item.LineItemsId,
                     OrderId = p_orderId
                 });
-
                 // update stock in correct storefront's lineItems
                 var stockUpdate = _context.LineItems.FirstOrDefault<LineItems>(dbItem => dbItem.LineItemsId == item.LineItemsId);
                 stockUpdate.Quantity = stockUpdate.Quantity - item.Quantity;
             }
-
             //save these changes
             _context.SaveChanges();
         }
