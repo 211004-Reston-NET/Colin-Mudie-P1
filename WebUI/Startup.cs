@@ -30,7 +30,7 @@ namespace WebUI
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
             services.AddScoped<IRepository, RepositoryCloud>();
-          
+    
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
