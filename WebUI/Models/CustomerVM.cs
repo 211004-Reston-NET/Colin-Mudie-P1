@@ -15,6 +15,7 @@ namespace WebUI.Models
         }
         public CustomerVM(Customer p_customer)
         {
+            this.CustomerId = p_customer.CustomerId;
             this.Name = p_customer.Name;
             this.Email= p_customer.Email;
             this.Address = p_customer.Address;
@@ -22,7 +23,7 @@ namespace WebUI.Models
         }
 
 
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
 
         [Required]
         public string Name { get; set; }

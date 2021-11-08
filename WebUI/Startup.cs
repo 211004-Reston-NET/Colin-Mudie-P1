@@ -30,6 +30,9 @@ namespace WebUI
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
             services.AddScoped<ICustomerBL, CustomerBL>();
+            services.AddScoped<ILineItemsBL, LineItemsBL>();
+            services.AddScoped<IOrderBL, OrderBL>();
+            services.AddScoped<IProductBL, ProductBL>();
             services.AddScoped<IRepository, RepositoryCloud>();
             
         }
