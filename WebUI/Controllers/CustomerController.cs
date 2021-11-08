@@ -42,7 +42,7 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CustomerVM custVM)
         {
-            if (ModelState.IsValid)
+            try
             {
                 _customerBL.AddCustomer(new Customer()
                 {
@@ -53,21 +53,36 @@ namespace WebUI.Controllers
                 });
                 return RedirectToAction(nameof(Index));
             }
-            //try
-            //{
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
-            return View();
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: HomeController1/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(CustomerVM custVM)
+        {
+            try
+            {
+                _customerBL.GetSingleCustomer(custVM.Name, custVM.Email);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: HomeController1/Edit/5
