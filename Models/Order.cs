@@ -48,7 +48,6 @@ namespace Models
         }
         public virtual Customer Customer { get; set; }
         public virtual StoreFront StoreFront { get; set; }
-        public virtual List<LineItemOrder> LineItemOrders { get; set; }
         public override string ToString()
         {
             string items = "";

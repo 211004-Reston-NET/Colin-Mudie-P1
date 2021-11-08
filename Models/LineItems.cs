@@ -5,7 +5,7 @@ namespace Models
 {
     public class LineItems
     {
-        private Product _product;
+        private Product _product = new Product();
         private int _quantity;
         public int LineItemsId { get; set; }
         public int ProductId { get; set; }
@@ -33,7 +33,7 @@ namespace Models
             }
         }
         public virtual StoreFront StoreFront { get; set; }
-        public virtual List<LineItemOrder> LineItemOrders { get; set; }
+        public List<Order> Order { get; set; }
         public override string ToString()
         {
             return $"Brand: {Product.Brand} \nName: {Product.Name} \nPrice: {Product.Price} \nDescription: {Product.Description} \nCategory: {Product.Category} \nQuantity: {Quantity}";

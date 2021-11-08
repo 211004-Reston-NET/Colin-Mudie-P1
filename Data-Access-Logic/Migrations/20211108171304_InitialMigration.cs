@@ -54,6 +54,33 @@ namespace Data_Access_Logic.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "line_item",
+                columns: table => new
+                {
+                    line_item_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    product_id = table.Column<int>(type: "int", nullable: false),
+                    storefront_id = table.Column<int>(type: "int", nullable: false),
+                    quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_line_item", x => x.line_item_id);
+                    table.ForeignKey(
+                        name: "FK__line_item__produ__160F4887",
+                        column: x => x.product_id,
+                        principalTable: "product",
+                        principalColumn: "product_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK__line_item__store__17036CC0",
+                        column: x => x.storefront_id,
+                        principalTable: "storefront",
+                        principalColumn: "storefront_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "order_",
                 columns: table => new
                 {
@@ -82,63 +109,27 @@ namespace Data_Access_Logic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "line_item",
+                name: "LineItemsOrder",
                 columns: table => new
                 {
-                    line_item_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    product_id = table.Column<int>(type: "int", nullable: false),
-                    storefront_id = table.Column<int>(type: "int", nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    LineItemsId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_line_item", x => x.line_item_id);
+                    table.PrimaryKey("PK_LineItemsOrder", x => new { x.LineItemsId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK__line_item__produ__160F4887",
-                        column: x => x.product_id,
-                        principalTable: "product",
-                        principalColumn: "product_id",
+                        name: "FK_LineItemsOrder_line_item_LineItemsId",
+                        column: x => x.LineItemsId,
+                        principalTable: "line_item",
+                        principalColumn: "line_item_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK__line_item__store__17036CC0",
-                        column: x => x.storefront_id,
-                        principalTable: "storefront",
-                        principalColumn: "storefront_id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_line_item_order__OrderId",
+                        name: "FK_LineItemsOrder_order__OrderId",
                         column: x => x.OrderId,
                         principalTable: "order_",
                         principalColumn: "order_id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "line_item_order",
-                columns: table => new
-                {
-                    line_item_order_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    order_id = table.Column<int>(type: "int", nullable: false),
-                    line_item_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_line_item_order", x => x.line_item_order_id);
-                    table.ForeignKey(
-                        name: "FK__line_item__line___18EBB532",
-                        column: x => x.line_item_id,
-                        principalTable: "line_item",
-                        principalColumn: "line_item_id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK__line_item__order__19DFD96B",
-                        column: x => x.order_id,
-                        principalTable: "order_",
-                        principalColumn: "order_id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -146,11 +137,6 @@ namespace Data_Access_Logic.Migrations
                 table: "customer",
                 column: "email",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_line_item_OrderId",
-                table: "line_item",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_line_item_product_id",
@@ -163,14 +149,9 @@ namespace Data_Access_Logic.Migrations
                 column: "storefront_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_line_item_order_line_item_id",
-                table: "line_item_order",
-                column: "line_item_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_line_item_order_order_id",
-                table: "line_item_order",
-                column: "order_id");
+                name: "IX_LineItemsOrder_OrderId",
+                table: "LineItemsOrder",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_order__customer_id",
@@ -186,16 +167,16 @@ namespace Data_Access_Logic.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "line_item_order");
+                name: "LineItemsOrder");
 
             migrationBuilder.DropTable(
                 name: "line_item");
 
             migrationBuilder.DropTable(
-                name: "product");
+                name: "order_");
 
             migrationBuilder.DropTable(
-                name: "order_");
+                name: "product");
 
             migrationBuilder.DropTable(
                 name: "storefront");

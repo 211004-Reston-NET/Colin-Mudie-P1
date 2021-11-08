@@ -20,7 +20,6 @@ namespace Data_Access_Logic
 
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<LineItems> LineItems { get; set; }
-        public virtual DbSet<LineItemOrder> LineItemOrders { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<StoreFront> Storefronts { get; set; }
@@ -86,28 +85,6 @@ namespace Data_Access_Logic
                     .HasConstraintName("FK__line_item__store__17036CC0");
             });
 
-            modelBuilder.Entity<LineItemOrder>(entity =>
-            {
-                entity.ToTable("line_item_order");
-
-                entity.Property(e => e.LineItemOrderId).HasColumnName("line_item_order_id");
-
-                entity.Property(e => e.LineItemsId).HasColumnName("line_item_id");
-
-                entity.Property(e => e.OrderId).HasColumnName("order_id");
-
-                entity.HasOne(d => d.LineItem)
-                    .WithMany(p => p.LineItemOrders)
-                    .HasForeignKey(d => d.LineItemsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__line_item__line___18EBB532");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.LineItemOrders)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__line_item__order__19DFD96B");
-            });
 
             modelBuilder.Entity<Order>(entity =>
             {

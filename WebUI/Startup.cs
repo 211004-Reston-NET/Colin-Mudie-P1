@@ -26,11 +26,12 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
+            services.AddScoped<ICustomerBL, CustomerBL>();
             services.AddScoped<IRepository, RepositoryCloud>();
-    
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

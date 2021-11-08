@@ -1,10 +1,13 @@
-﻿@{
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
+    <a asp-controller="Customer" asp-action="Index">Click Here To Add Customer!</a>
     <a asp-controller="StoreFront" asp-action="Index">Click Here To View Stores!</a>
 </div>

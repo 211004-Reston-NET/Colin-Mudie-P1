@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Data_Access_Logic
@@ -25,22 +26,24 @@ namespace Data_Access_Logic
 
         public List<Order> AddLineItemsListToOrdersList(List<Order> p_orderList)
         {   
-            for (int i = 0; i < p_orderList.Count; i++)
-            {
-                p_orderList[i].LineItems = _context.LineItemOrders
-                    .Where(lio => lio.OrderId == p_orderList[i].OrderId)
-                    .Select(lio => 
-                        new LineItems(){
-                            LineItemsId = lio.LineItemsId
-                        }
-                    ).ToList();
-                for (int j = 0; j < p_orderList[i].LineItems.Count; j++)
-                {
-                    var tempLine = _context.LineItems
-                                .FirstOrDefault<LineItems>(item => item.LineItemsId == p_orderList[i].LineItems[j].LineItemsId);
-                    p_orderList[i].LineItems[j] = tempLine;
-                }
-            }
+            //FIX THIS
+
+            // for (int i = 0; i < p_orderList.Count; i++)
+            // {
+            //     p_orderList[i].LineItems = _context.LineItemOrders
+            //         .Where(lio => lio.OrderId == p_orderList[i].OrderId)
+            //         .Select(lio => 
+            //             new LineItems(){
+            //                 LineItemsId = lio.LineItemsId
+            //             }
+            //         ).ToList();
+            //     for (int j = 0; j < p_orderList[i].LineItems.Count; j++)
+            //     {
+            //         var tempLine = _context.LineItems
+            //                     .FirstOrDefault<LineItems>(item => item.LineItemsId == p_orderList[i].LineItems[j].LineItemsId);
+            //         p_orderList[i].LineItems[j] = tempLine;
+            //     }
+            // }
             return p_orderList;
         }
 
@@ -73,7 +76,28 @@ namespace Data_Access_Logic
         }
         public List<LineItems> GetLineItemsList(int p_storeId)
         {
-            return _context.LineItems.Where(item => item.StoreFront.StoreFrontId == p_storeId).ToList();
+            // return _context.LineItems
+            //             .Include("Product")
+            //             .Where(item => item.StoreFront.StoreFrontId == p_storeId).ToList();
+            return _context.LineItems
+            .Where(item => item.StoreFront.StoreFrontId == p_storeId)
+            .Select(item =>
+                new LineItems()
+                {
+                    Product = new Product()
+                    {
+                        Name = item.Product.Name,
+                        Price = item.Product.Price,
+                        Description = item.Product.Description,
+                        Brand = item.Product.Brand,
+                        Category = item.Product.Category,
+                        ProductId = item.Product.ProductId
+                    },
+                    Quantity = item.Quantity,
+                    LineItemsId = item.LineItemsId,
+                    StoreFrontId = item.StoreFrontId
+                }
+            ).ToList();
         }
 
         public List<Order> GetOrdersList(string p_customer_or_store, int p_id)
@@ -99,7 +123,38 @@ namespace Data_Access_Logic
 
         public List<StoreFront> GetStoreFrontList()
         {
-            return _context.Storefronts.ToList();
+            return _context.Storefronts.Select(store =>
+                // converting Entities Storefront to StoreFront
+                new StoreFront()
+                {
+                    Name = store.Name,
+                    Address = store.Address,
+                    // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
+                    LineItems = store.LineItems.Select(item => new LineItems()
+                    {
+                        Quantity = item.Quantity,
+                        Product = new Product()
+                        {
+                            Name = item.Product.Name,
+                            Price = item.Product.Price,
+                            Description = item.Product.Description,
+                            Brand = item.Product.Brand,
+                            Category = item.Product.Category,
+                            ProductId = item.Product.ProductId
+                        },
+                        LineItemsId = item.LineItemsId
+                    }).ToList(),
+                    // 
+                    Order = store.Order.Select(order => new Order()
+                    {
+                        OrderId = order.OrderId,
+                        Address = order.Address,
+                        TotalPrice = order.TotalPrice
+                    }).ToList(),
+                    StoreFrontId = store.StoreFrontId
+                }
+            ).ToList();
+            // return _context.Storefronts.ToList();
         }
 
         public Order PlaceOrder(Customer p_customer, Order p_order)
@@ -135,11 +190,12 @@ namespace Data_Access_Logic
             foreach (LineItems item in p_order.LineItems)
             {
                 // add each item to the order using line_item_order
-                _context.LineItemOrders.Add(new LineItemOrder()
-                {
-                    LineItemsId = item.LineItemsId,
-                    OrderId = p_orderId
-                });
+//FIX THIS                
+                // _context.LineItemOrders.Add(new LineItemOrder()
+                // {
+                //     LineItemsId = item.LineItemsId,
+                //     OrderId = p_orderId
+                // });
                 // update stock in correct storefront's lineItems
                 var stockUpdate = _context.LineItems.FirstOrDefault<LineItems>(dbItem => dbItem.LineItemsId == item.LineItemsId);
                 stockUpdate.Quantity = stockUpdate.Quantity - item.Quantity;
