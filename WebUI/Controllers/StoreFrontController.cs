@@ -16,7 +16,7 @@ namespace WebUI.Controllers
         {
             _storeBL = p_storeBL;
         }
-        // GET: HomeController1
+        // GET: StoreFront
         public ActionResult Index()
         {
             return View(_storeBL.GetStoreFrontList()
@@ -25,19 +25,19 @@ namespace WebUI.Controllers
                 );
         }
 
-        // GET: HomeController1/Details/5
+        // GET: StoreFront/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: HomeController1/Create
+        // GET: StoreFront/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HomeController1/Create
+        // POST: StoreFront/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -52,13 +52,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: HomeController1/Edit/5
+        // GET: StoreFront/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Edit/5
+        // POST: StoreFront/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -73,13 +73,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: HomeController1/Delete/5
+        // GET: StoreFront/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Delete/5
+        // POST: StoreFront/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

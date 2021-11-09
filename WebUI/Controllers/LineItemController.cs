@@ -1,33 +1,43 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business_Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUI.Models;
 
 namespace WebUI.Controllers
 {
     public class LineItemController : Controller
     {
-        // GET: HomeController1
-        public ActionResult Index()
+        private ILineItemsBL _lineItemBL;
+        public LineItemController(ILineItemsBL p_lineItem)
         {
-            return View();
+            _lineItemBL = p_lineItem;
+        }
+        // GET: LineItem
+        public ActionResult Index(int p_storeId)
+        {
+            return View(_lineItemBL.GetLineItems(p_storeId)
+                        .Select(item => new LineItemVM(item))
+                        .ToList()
+                );
         }
 
-        // GET: HomeController1/Details/5
+        // GET: LineItem/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: HomeController1/Create
+        // GET: LineItem/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HomeController1/Create
+        // POST: LineItem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,13 +52,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: HomeController1/Edit/5
+        // GET: LineItem/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Edit/5
+        // POST: LineItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -63,13 +73,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: HomeController1/Delete/5
+        // GET: LineItem/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Delete/5
+        // POST: LineItem/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

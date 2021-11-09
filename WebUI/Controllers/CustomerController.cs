@@ -12,7 +12,7 @@ namespace WebUI.Controllers
 {
     public class CustomerController : Controller
     {
-
+        public static Customer cust = new Customer();
         private ICustomerBL _customerBL;
         public CustomerController(ICustomerBL p_custBL)
         {
@@ -76,7 +76,7 @@ namespace WebUI.Controllers
         {
             try
             {
-                _customerBL.GetSingleCustomer(custVM.Name, custVM.Email);
+                CustomerController.cust = _customerBL.GetSingleCustomer(custVM.Name, custVM.Email);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -20,6 +20,7 @@ namespace WebUI.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.CustName = CustomerController.cust.Name;
             return View();
         }
 
