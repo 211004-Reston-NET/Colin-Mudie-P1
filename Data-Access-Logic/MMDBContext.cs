@@ -77,11 +77,13 @@ namespace Data_Access_Logic
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__line_item__produ__160F4887");
 
                 entity.HasOne(d => d.StoreFront)
                     .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.StoreFrontId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__line_item__store__17036CC0");
             });
 
@@ -109,13 +111,14 @@ namespace Data_Access_Logic
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("order__FK");
 
                 entity.HasOne(d => d.StoreFront)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StoreFrontId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__order___storefro__1332DBDC");
             });
 
