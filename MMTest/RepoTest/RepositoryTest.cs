@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Data_Access_Logic;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace MMTest
                 var test = repo.GetCustomerList();
 
                 //Assert
-                Assert.Equal(test.Count, 2);
+                Assert.Equal(2, test.Count);
                 Assert.Equal("Colin", test[0].Name);
             }
         }
@@ -48,14 +49,14 @@ namespace MMTest
                     PhoneNumber = "1113335555",
                     Order = new List<Order>
                         {
-                            new Order 
+                            new Order
                             {
                                 Address = "store 1 place",
                                 TotalPrice = 100,
                                 StoreFrontId = 1,
                                 CustomerId = 1
                             },
-                            new Order 
+                            new Order
                             {
                                 Address = "store 2 place",
                                 TotalPrice = 20,
@@ -64,7 +65,7 @@ namespace MMTest
                             }
                         }
                 };
-                
+
                 //Act
                 repo.AddCustomer(_customerTest);
 
@@ -74,15 +75,15 @@ namespace MMTest
                 {
                     var result = contexts.Customers.Find(3);
                     Assert.NotNull(result);
-                
+
                 }
             }
         }
 
-        public void AddLineItemsListToOrdersListShouldAddListOfLineItemsToOrders()
-        {
+        //public void AddLineItemsListToOrdersListShouldAddListOfLineItemsToOrders()
+        //{
 
-        }
+        //}
 
         [Fact]
         public void GetAllProductsShouldReturnAllProducts()
@@ -93,7 +94,7 @@ namespace MMTest
 
                 var test = repo.GetAllProducts();
 
-                Assert.Equal(test.Count, 2);
+                Assert.Equal(8, test.Count);
                 Assert.Equal("prod name 1", test[0].Name);
             }
         }
@@ -123,8 +124,8 @@ namespace MMTest
                 var test = repo.GetLineItemsList(_testStoreID);
 
                 //Assert
-                Assert.Equal(test.Count, 2);
-                Assert.Equal(1, test[0].ProductId);
+                Assert.Equal(4, test.Count);
+                Assert.Equal(7, test[0].ProductId);
             }
         }
 
@@ -145,11 +146,46 @@ namespace MMTest
                 var testCustomer = repo.GetOrdersList(_customer, _custId);
 
                 //Assert
-                Assert.Equal(testStore.Count, 3);
-                Assert.Equal(testCustomer.Count, 6);
+                Assert.Equal(3, testStore.Count);
+                Assert.Equal(6, testCustomer.Count);
             }
         }
 
+        [Fact]
+        public void GetLineItemByIdShouldReturnLineItemWithCorrectId()
+        {
+            using (var context = new MMDBContext(_options))
+            {
+                //Arrange
+                IRepository repo = new RepositoryCloud(context);
+                int _lineItemId = 1;
+
+                //Act
+                var itemFound = repo.GetLineItemsById(_lineItemId);
+
+                //Assert
+                Assert.Equal(1, itemFound.LineItemsId);
+                Assert.Equal("prod name 3", itemFound.Product.Name);
+            }
+        }
+
+        [Fact]
+        public void GetStoreFrontByIdShouldReturnStoreFrontWithCorrectId()
+        {
+            using (var context = new MMDBContext(_options))
+            {
+                //Arrange
+                IRepository repo = new RepositoryCloud(context);
+                int _storeFrontId = 1;
+
+                //Act
+                StoreFront storeFound = repo.GetStoreFrontById(_storeFrontId);
+
+                //Assert
+                Assert.Equal(1, storeFound.StoreFrontId);
+                Assert.Equal("Test Store 1", storeFound.Name);
+            }
+        }
 
         private void Seed()
         {
@@ -163,6 +199,7 @@ namespace MMTest
                 (
                     new Product
                     {
+                        ProductId = 1,
                         Name = "prod name 1",
                         Price = 20,
                         Description = "a very nice product 1",
@@ -171,6 +208,7 @@ namespace MMTest
                     },
                     new Product
                     {
+                        ProductId = 2,
                         Name = "prod name 2",
                         Price = 12,
                         Description = "an even better product 2",
@@ -179,23 +217,43 @@ namespace MMTest
                     }
                 );
 
+
                 context.Storefronts.AddRange
                 (
                     new StoreFront
                     {
+                        StoreFrontId = 1,
                         Name = "Test Store 1",
                         Address = "123 Store Ln",
                         LineItems = new List<LineItems>
                             {
                                 new LineItems
                                 {
+                                    StoreFrontId = 1,
+                                    LineItemsId = 3,
                                     ProductId = 1,
-                                    Quantity = 2
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 1",
+                                        Price = 20,
+                                        Description = "a very nice product 1",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
                                 },
                                 new LineItems
                                 {
+                                    StoreFrontId = 1,
+                                    LineItemsId = 4,
                                     ProductId = 2,
-                                    Quantity = 2
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 2",
+                                        Price = 12,
+                                        Description = "an even better product 2",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
                                 }
                             },
                         Order = new List<Order>
@@ -216,19 +274,38 @@ namespace MMTest
                     },
                     new StoreFront
                     {
+                        StoreFrontId = 2,
                         Name = "Test Store 2",
                         Address = "456 2tore place",
                         LineItems = new List<LineItems>
                             {
                                 new LineItems
                                 {
+                                    StoreFrontId = 2,
+                                    LineItemsId = 5,
                                     ProductId = 1,
-                                    Quantity = 2
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 1",
+                                        Price = 20,
+                                        Description = "a very nice product 1",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
                                 },
                                 new LineItems
                                 {
+                                    StoreFrontId = 2,
+                                    LineItemsId = 6,
                                     ProductId = 2,
-                                    Quantity = 2
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 2",
+                                        Price = 12,
+                                        Description = "an even better product 2",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
                                 }
                             },
                         Order = new List<Order>
@@ -246,6 +323,39 @@ namespace MMTest
                                     CustomerId = 1
                                 }
                             }
+                    }
+                );
+
+
+                context.LineItems.AddRange
+                (
+                    new LineItems
+                    {
+                        StoreFrontId = 1,
+                        LineItemsId = 1,
+                        ProductId = 1,
+                        Quantity = 7,
+                        Product = new Product {
+                            Name = "prod name 3",
+                            Price = 20,
+                            Description = "a very nice product 1",
+                            Brand = "Prod's Products",
+                            Category = "really great prod"
+                        }
+                    },
+                    new LineItems
+                    {
+                        StoreFrontId = 1,
+                        LineItemsId = 2,
+                        ProductId = 2,
+                        Quantity = 2,
+                        Product = new Product {
+                            Name = "prod name 4",
+                            Price = 12,
+                            Description = "an even better product 2",
+                            Brand = "Prod's Products",
+                            Category = "really great prod"
+                        }
                     }
                 );
 
