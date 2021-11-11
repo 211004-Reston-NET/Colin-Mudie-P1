@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+// using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
+
 namespace Models
 {
-    public class Customer
+    public class Customer : IdentityUser
     // The customer model is supposed to hold 
     // the data concerning a customer.
     {
@@ -15,6 +18,7 @@ namespace Models
         private List<Order> _order = new List<Order>();
         public int CustomerId { get; set; }
 
+        [PersonalData]
         public string Name
         {
             get { return _name; }
@@ -28,6 +32,7 @@ namespace Models
             }
         }
 
+        [PersonalData]
         public string Address
         {
             get { return _address; }
@@ -41,6 +46,7 @@ namespace Models
             }
         }
 
+        [PersonalData]
         public string Email
         {
             get { return _email; }
@@ -54,6 +60,7 @@ namespace Models
             }
         }
 
+        [PersonalData]
         public string PhoneNumber
         {
             get { return _phoneNumber; }
@@ -70,11 +77,6 @@ namespace Models
         {
             get { return _order; }
             set { _order = value; }
-        }
-
-        public override string ToString()
-        {
-            return $"Name: {Name} \nAddress: {Address} \nEmail: {Email} \nPhone: {PhoneNumber}";
         }
     }
 }

@@ -64,7 +64,7 @@ namespace User_Interface
 
                 case "3":
                     Customer tempCust = _customerBL.GetSingleCustomer(SingletonCustomer.customer.Name, SingletonCustomer.customer.Email);
-                    if (tempCust != null)
+                    if (tempCust.Name != null || tempCust.Email != null)
                     {
                         SingletonCustomer.customer = tempCust;
                         Console.WriteLine($"   {SingletonCustomer.customer.Name} was found in the list of customers" +

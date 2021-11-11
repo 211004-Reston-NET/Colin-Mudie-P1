@@ -21,7 +21,10 @@ namespace User_Interface
             List<Customer> listOfCustomers = _customerBL.GetCustomerList();
             foreach (Customer customer in listOfCustomers)
             {
-                Console.WriteLine(customer);
+                Console.WriteLine(customer.Name);
+                Console.WriteLine(customer.Email);
+                Console.WriteLine(customer.Address);
+                Console.WriteLine(customer.PhoneNumber);
                 Console.WriteLine("-------------------------");
             }
             Console.WriteLine("\n   [0] - Go back");

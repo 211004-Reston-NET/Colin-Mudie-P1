@@ -6,6 +6,9 @@
 }
 @using System.Linq
 @model IEnumerable<WebUI.Models.LineItemVM>
+@{
+    var order = Model;
+ }
 
 <h1>Current Order</h1>
 <br />
@@ -16,6 +19,7 @@
     <tr>
         <th>Name</th>
         <th>Brand</th>
+        <th>Category</th>
         <th>Price</th>
         <th></th>
     </tr>
@@ -24,9 +28,15 @@
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category)</td>
             <td>@Html.DisplayFor(modelItem => item.Price)</td>
             <td><button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
         </tr>
     }
 </table>
 <h3>Total Price: @ViewData["TotalPrice"]</h3>
+<br />
+<form asp-action="Create">
+    <input type="hidden" asp-for="@order" />
+    <input type="submit" value="PlaceOrder" class="btn btn-primary" />
+</form>
