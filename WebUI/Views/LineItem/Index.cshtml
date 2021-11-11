@@ -6,7 +6,10 @@
 @model IEnumerable<WebUI.Models.LineItemVM>
 
 <h1>List of Products</h1>
-
+<br />
+<button class="btn btn-primary">@Html.ActionLink("Back", "Index", "StoreFront", new { },  new { @style = "color: white;" })</button>
+<br />
+<br />
 <table class="table table-striped table-hover">
     <tr>
         <th></th>
@@ -19,14 +22,14 @@
     </tr>
     @foreach (LineItemVM item in Model)
     {
-<tr>
-    <td><button class="btn btn-primary">@Html.ActionLink("Buy", "Index", "Order", new { p_storeId = item.StoreFrontId, p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
-    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
-    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-    <td>@Html.DisplayFor(modelItem => item.Price)</td>
-    <td>@Html.DisplayFor(modelItem => item.Brand)</td>
-    <td>@Html.DisplayFor(modelItem => item.Category)</td>
-    <td>@Html.DisplayFor(modelItem => item.Description)</td>
-</tr>
+        <tr>
+            <td><button class="btn btn-primary">@Html.ActionLink("Buy", "Index", "Order", new { p_storeId = item.StoreFrontId, p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
+            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+        </tr>
     }
 </table>
