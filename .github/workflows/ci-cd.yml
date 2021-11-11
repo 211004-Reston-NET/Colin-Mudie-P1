@@ -42,7 +42,6 @@ jobs:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
-          sonarTestArgument: ./ --logger trx --collect"xPlat Code Coverage" --DataCollectionRunSetting.DataCollectors.DataCollector.Configuration.Format=opencover
     
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
