@@ -86,6 +86,7 @@ jobs:
     steps:
     - name: Deploy
       uses: azure/webapps-deploy@v2
+      id: deploy-to-webapp
       with:
         app-name: Michigan-Modular-Web-App # Replace this with your web app name
         slot-name: 'Production'
