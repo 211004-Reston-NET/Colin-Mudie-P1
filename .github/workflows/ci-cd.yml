@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'Michigan-Modular-Web-App'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_738c86ddeab747a894a87265385444e8 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
