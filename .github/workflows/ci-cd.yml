@@ -74,21 +74,10 @@ jobs:
       with:
         name: RRWebUI
         path: ./publish
-        
-        
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: $${{steps.deploy-to-webapp.output.webapp-url}}
     
-    steps:
     - name: Deploy
       uses: azure/webapps-deploy@v2
-      id: deploy-to-webapp
       with:
         app-name: Michigan-Modular-Web-App # Replace this with your web app name
-        slot-name: 'Production'
         publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
         package: ./publish
