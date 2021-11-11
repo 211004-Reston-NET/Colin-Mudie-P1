@@ -19,7 +19,7 @@
     @foreach (LineItemVM item in Model)
     {
 <tr>
-    <td><button class="btn btn-primary">Buy</button></td>
+    <td><button class="btn btn-primary">@Html.ActionLink("Buy", "Index", "Order", new { p_storeId = item.StoreFrontId, p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
     <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
     <td>@Html.DisplayFor(modelItem => item.Name)</td>
     <td>@Html.DisplayFor(modelItem => item.Price)</td>

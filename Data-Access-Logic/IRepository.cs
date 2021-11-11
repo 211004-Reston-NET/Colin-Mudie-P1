@@ -94,5 +94,19 @@ namespace Data_Access_Logic
         /// </summary>
         /// <param name="p_customer"> the new values and id for the customer to update.</param>
         void UpdateCustomer(Models.Customer p_customer);
+
+        /// <summary>
+        /// Will find and return a lineItem matching the given LineItemId parameter
+        /// </summary>
+        /// <param name="p_lineItemId"> the ID of the lineItem to find </param>
+        /// <returns> LineItem to be found </returns>
+        LineItems GetLineItemsById(int p_lineItemId);
+
+        /// <summary>
+        /// Will find and return a single Storefront with an ID matching the p_storeId parameter.
+        /// </summary>
+        /// <param name="p_storeId"> The ID for the store to find </param>
+        /// <returns> Will return a single storefront. </returns>
+        StoreFront GetStoreFrontById(int p_storeId);
     }
 }

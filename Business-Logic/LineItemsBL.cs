@@ -20,6 +20,11 @@ namespace Business_Logic
             return _repo.GetLineItemsList(p_storeId);
         }
 
+        public LineItems GetLineItemsById(int p_lineItemId)
+        {
+            return _repo.GetLineItemsById(p_lineItemId);
+        }
+
         public LineItems GetLineItemSearch(string p_lineItemName, int p_storeId)
         {
             List<LineItems> lines = _repo.GetLineItemsList(p_storeId);

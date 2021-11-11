@@ -25,7 +25,7 @@ namespace Data_Access_Logic
         }
 
         public List<Order> AddLineItemsListToOrdersList(List<Order> p_orderList)
-        {   
+        {
             //FIX THIS
 
             // for (int i = 0; i < p_orderList.Count; i++)
@@ -60,44 +60,71 @@ namespace Data_Access_Logic
         public int GetLastOrderId()
         {
             int lastOrderId = 0;
-            var listOfOrders = _context.Orders.Select(order => 
+            var listOfOrders = _context.Orders.Select(order =>
                 new Order
                 {
                     OrderId = order.OrderId,
                 }
             ).ToList();
-            foreach(Order ord in listOfOrders)
+            foreach (Order ord in listOfOrders)
             {
-                if (ord.OrderId > lastOrderId){
+                if (ord.OrderId > lastOrderId)
+                {
                     lastOrderId = ord.OrderId;
                 }
             }
             return lastOrderId;
         }
+
+        public LineItems GetLineItemsById(int p_lineItemId)
+        {
+            return _context.LineItems.Select(item =>
+                            new LineItems()
+                            {
+                                Product = new Product()
+                                {
+                                    Name = item.Product.Name,
+                                    Price = item.Product.Price,
+                                    Description = item.Product.Description,
+                                    Brand = item.Product.Brand,
+                                    Category = item.Product.Category,
+                                    ProductId = item.Product.ProductId
+                                },
+                                Quantity = item.Quantity,
+                                LineItemsId = item.LineItemsId,
+                                StoreFrontId = item.StoreFrontId,
+                                ProductId = item.ProductId
+                            })
+                          .ToList()
+                          .FirstOrDefault(item => item.LineItemsId == p_lineItemId);
+        }
+
         public List<LineItems> GetLineItemsList(int p_storeId)
         {
             // return _context.LineItems
             //             .Include("Product")
             //             .Where(item => item.StoreFront.StoreFrontId == p_storeId).ToList();
             return _context.LineItems
-            .Where(item => item.StoreFront.StoreFrontId == p_storeId)
-            .Select(item =>
-                new LineItems()
-                {
-                    Product = new Product()
-                    {
-                        Name = item.Product.Name,
-                        Price = item.Product.Price,
-                        Description = item.Product.Description,
-                        Brand = item.Product.Brand,
-                        Category = item.Product.Category,
-                        ProductId = item.Product.ProductId
-                    },
-                    Quantity = item.Quantity,
-                    LineItemsId = item.LineItemsId,
-                    StoreFrontId = item.StoreFrontId
-                }
-            ).ToList();
+                        .Where(item => item.StoreFront.StoreFrontId == p_storeId)
+                        .Select(item =>
+                            new LineItems()
+                            {
+                                Product = new Product()
+                                {
+                                    Name = item.Product.Name,
+                                    Price = item.Product.Price,
+                                    Description = item.Product.Description,
+                                    Brand = item.Product.Brand,
+                                    Category = item.Product.Category,
+                                    ProductId = item.Product.ProductId
+                                },
+                                Quantity = item.Quantity,
+                                LineItemsId = item.LineItemsId,
+                                StoreFrontId = item.StoreFrontId,
+                                ProductId = item.ProductId
+                            }
+                        ).ToList();
+
         }
 
         public List<Order> GetOrdersList(string p_customer_or_store, int p_id)
@@ -118,7 +145,44 @@ namespace Data_Access_Logic
 
         public Product GetProductByProductId(int p_productId)
         {
-            return _context.Products.FirstOrDefault<Product>(prod => prod.ProductId == p_productId);            
+            return _context.Products.FirstOrDefault<Product>(prod => prod.ProductId == p_productId);
+        }
+
+        public StoreFront GetStoreFrontById(int p_storeId)
+        {
+            return _context.Storefronts
+                        .Select(store =>
+                            // converting Entities Storefront to StoreFront
+                            new StoreFront()
+                            {
+                                Name = store.Name,
+                                Address = store.Address,
+                                // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
+                                LineItems = store.LineItems.Select(item => new LineItems()
+                                {
+                                    Quantity = item.Quantity,
+                                    Product = new Product()
+                                    {
+                                        Name = item.Product.Name,
+                                        Price = item.Product.Price,
+                                        Description = item.Product.Description,
+                                        Brand = item.Product.Brand,
+                                        Category = item.Product.Category,
+                                        ProductId = item.Product.ProductId
+                                    },
+                                    LineItemsId = item.LineItemsId
+                                }).ToList(),
+                                // 
+                                Order = store.Order.Select(order => new Order()
+                                {
+                                    OrderId = order.OrderId,
+                                    Address = order.Address,
+                                    TotalPrice = order.TotalPrice
+                                }).ToList(),
+                                StoreFrontId = store.StoreFrontId
+                            }
+                        )
+                    .FirstOrDefault(store => store.StoreFrontId == p_storeId);
         }
 
         public List<StoreFront> GetStoreFrontList()
@@ -190,7 +254,7 @@ namespace Data_Access_Logic
             foreach (LineItems item in p_order.LineItems)
             {
                 // add each item to the order using line_item_order
-//FIX THIS                
+                //FIX THIS                
                 // _context.LineItemOrders.Add(new LineItemOrder()
                 // {
                 //     LineItemsId = item.LineItemsId,

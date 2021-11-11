@@ -1,6 +1,7 @@
 ﻿using Business_Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace WebUI.Controllers
         {
             return View(_lineItemBL.GetLineItems(p_storeId)
                         .Select(item => new LineItemVM(item))
-                        .ToList()
+                        .ToList() 
                 );
         }
 

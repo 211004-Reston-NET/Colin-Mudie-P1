@@ -26,6 +26,13 @@ namespace Business_Logic
         /// <param name="p_lineItemName"> The name of the LineItem.Product.Name that will be searched for. </param>
         /// <param name="p_storeId"> The storefront_id to search li's at. </param>
         /// <returns></returns>
-        LineItems GetLineItemSearch(string p_lineItemName, int p_storeId); 
+        LineItems GetLineItemSearch(string p_lineItemName, int p_storeId);
+
+        /// <summary>
+        /// Will find and return a lineItem matching the given LineItemId parameter
+        /// </summary>
+        /// <param name="p_lineItemId"> the ID of the lineItem to find </param>
+        /// <returns> LineItem to be found </returns>
+        LineItems GetLineItemsById(int p_lineItemId);
     }
 }

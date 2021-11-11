@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model WebUI.Models.LineItemVM
+
+<h1 class="display-4">Remove Item</h1>
+<h3>You sure you want to remove this item from your shopping cart?</h3>
+
+<div>
+    <dl>
+        <dt>
+            Name:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Name)</span>
+        </dt>
+        <dt>
+            Brand:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Brand)</span>
+        </dt>
+        <dt>
+            Category:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Category)</span>
+        </dt>
+        <dt>
+            Description:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Description)</span>
+        </dt>
+        <dt>
+            Store Location:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.StoreFrontName)</span>
+        </dt>
+        <dt>
+            Price:
+            <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Price)</span>
+        </dt>
+
+        <!--We need a form to do a post request-->
+        <form asp-action="Delete">
+            <!--
+            This input element is hidden because we don't want the user to input some id instead we are just supplying the id w
+            Already have
+        -->
+            <input type="hidden" asp-for="LineItemId" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </form>
+    </dl>
+</div>
