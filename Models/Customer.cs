@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Models
 {
-    public class Customer : IdentityUser
+    public class Customer 
+    //public class Customer : IdentityUser
     // The customer model is supposed to hold 
     // the data concerning a customer.
     {
