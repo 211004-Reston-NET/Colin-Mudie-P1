@@ -7,24 +7,26 @@
 @using System.Linq
 @model IEnumerable<WebUI.Models.LineItemVM>
 
-    <h1>Current Order</h1>
-    <br />
-    
-    <table class="table table-striped table-hover">
+<h1>Current Order</h1>
+<br />
+<button class="btn btn-primary">@Html.ActionLink("Back", "Index", "LineItem", new { p_storeId = Model.Last().StoreFrontId }, new { @style = "color: white;" })</button>
+<br />
+<br />
+<table class="table table-striped table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    @foreach (LineItemVM item in Model)
+    {
         <tr>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th></th>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td><button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
         </tr>
-        @foreach (LineItemVM item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Brand)</td>
-                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                <td><button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { p_lineItemId = item.LineItemId }, new { @style = "color: white;" })</button></td>
-            </tr>
-        }
-    </table>
-    <h3>Total Price: @ViewData["TotalPrice"]</h3>
+    }
+</table>
+<h3>Total Price: @ViewData["TotalPrice"]</h3>

@@ -34,15 +34,14 @@
             Price:
             <span class="col-sm-10" style="font-weight: normal;">@Html.DisplayFor(model => model.Price)</span>
         </dt>
-
-        <!--We need a form to do a post request-->
-        <form asp-action="Delete">
-            <!--
+    </dl>
+    <!--We need a form to do a post request-->
+    <form asp-action="Delete">
+        <!--
             This input element is hidden because we don't want the user to input some id instead we are just supplying the id w
             Already have
         -->
-            <input type="hidden" asp-for="LineItemId" />
-            <input type="submit" value="Delete" class="btn btn-danger" />
-        </form>
-    </dl>
+        <input type="hidden" asp-for="LineItemId" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
 </div>
