@@ -5,9 +5,8 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity;
 
 namespace Models
-{
-    public class Customer 
-    //public class Customer : IdentityUser
+{ 
+    public class Customer : IdentityUser
     // The customer model is supposed to hold 
     // the data concerning a customer.
     {
@@ -33,6 +32,7 @@ namespace Models
             }
         }
 
+
         [PersonalData]
         public string Address
         {
@@ -48,7 +48,7 @@ namespace Models
         }
 
         [PersonalData]
-        public string Email
+        public override string Email
         {
             get { return _email; }
             set
@@ -62,7 +62,7 @@ namespace Models
         }
 
         [PersonalData]
-        public string PhoneNumber
+        public override string PhoneNumber
         {
             get { return _phoneNumber; }
             set

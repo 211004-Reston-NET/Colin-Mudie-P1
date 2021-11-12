@@ -118,7 +118,7 @@ namespace User_Interface
 
                 case "3":
                     //--------- add Order to DB here.---------\\
-                    SingletonCustomer.orders.CustomerId = SingletonCustomer.customer.CustomerId;
+                    SingletonCustomer.orders.CustomerId = SingletonCustomer.customer.Id;
                     _customerBL.PlaceOrder(SingletonCustomer.customer, SingletonCustomer.orders);
                     
                     Console.WriteLine("   Order Placed" +

@@ -15,7 +15,8 @@ namespace User_Interface
         
         public void Menu()
         {
-            List<Order> listOfOrders = _orderBL.GetOrdersList(SingletonCustomer.orderType, SingletonCustomer.storeOrCustID);
+            // List<Order> listOfOrders = _orderBL.GetOrdersList(SingletonCustomer.orderType, SingletonCustomer.storeOrCustID);
+            List<Order> listOfOrders = new List<Order>();
             int _count = 0;
             if (SingletonCustomer.orderType == "customer" ){
                 Console.WriteLine($"We have found {listOfOrders.Count} orders from {SingletonCustomer.customer.Name}" +

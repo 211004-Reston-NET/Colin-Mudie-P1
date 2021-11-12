@@ -11,7 +11,7 @@ namespace Models
         private decimal _totalPrice;
         public int OrderId { get; set; }
         public int StoreFrontId { get; set; }
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         public List<LineItems> LineItems
         {

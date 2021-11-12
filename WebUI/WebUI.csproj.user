@@ -10,5 +10,6 @@
     <WebStackScaffolding_ViewDialogWidth>800.603773584906</WebStackScaffolding_ViewDialogWidth>
     <WebStackScaffolding_DbContextDialogWidth>650.264150943396</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_IdentityDialogWidth>650.264150943396</WebStackScaffolding_IdentityDialogWidth>
+    <WebStackScaffolding_LayoutPageFile>~/Areas/Identity/Pages/_UserLayout.cshtml</WebStackScaffolding_LayoutPageFile>
   </PropertyGroup>
 </Project>

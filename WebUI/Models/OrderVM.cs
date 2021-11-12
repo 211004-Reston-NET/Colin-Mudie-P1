@@ -27,7 +27,7 @@ namespace WebUI.Models
         public string Address { get; set; }
         public decimal TotalPrice { get; set; }
         public int StoreFrontId { get; set; }
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
     }
 }

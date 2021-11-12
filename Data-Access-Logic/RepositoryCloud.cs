@@ -95,8 +95,8 @@ namespace Data_Access_Logic
                                 StoreFrontId = item.StoreFrontId,
                                 ProductId = item.ProductId
                             })
-                          .ToList()
-                          .FirstOrDefault(item => item.LineItemsId == p_lineItemId);
+                        .ToList()
+                        .FirstOrDefault(item => item.LineItemsId == p_lineItemId);
         }
 
         public List<LineItems> GetLineItemsList(int p_storeId)
@@ -127,20 +127,16 @@ namespace Data_Access_Logic
 
         }
 
-        public List<Order> GetOrdersList(string p_customer_or_store, int p_id)
+        public List<Order> GetOrdersListForStore(int p_storeId)
         {
-            List<Order> listOfOrders = new List<Order>();
-            switch (p_customer_or_store)
-            {
-                case "store":
-                    return _context.Orders
-                    .Where(order => order.StoreFrontId == p_id).ToList();
-                case "customer":
-                    return _context.Orders
-                    .Where(order => order.CustomerId == p_id).ToList();
-                default:
-                    return null;
-            }
+            return _context.Orders
+            .Where(order => order.StoreFrontId == p_storeId).ToList();
+        }
+
+        public List<Order> GetOrdersListForCustomer(string p_custId)
+        {
+            return _context.Orders
+            .Where(order => order.CustomerId == p_custId).ToList();
         }
 
         public Product GetProductByProductId(int p_productId)
@@ -225,7 +221,7 @@ namespace Data_Access_Logic
         {
             // add order to customer's list of orders
             var customer = _context.Customers
-                                .First<Customer>(cust => cust.CustomerId == p_customer.CustomerId);
+                                .First<Customer>(cust => cust.Id == p_customer.Id);
             customer.Order.Add(p_order);
             _context.SaveChanges();
             int lastOrderId = GetLastOrderId();
@@ -244,7 +240,7 @@ namespace Data_Access_Logic
         public void UpdateCustomer(Customer p_customer)
         {
             var query = _context.Customers
-                            .FirstOrDefault(cust => cust.CustomerId == p_customer.CustomerId);
+                            .FirstOrDefault(cust => cust.Id == p_customer.Id);
             query = p_customer;
             _context.SaveChanges();
         }

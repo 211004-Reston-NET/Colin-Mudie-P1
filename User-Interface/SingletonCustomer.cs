@@ -13,6 +13,7 @@ namespace User_Interface
         public static string orderType { get; set; }
             // when searching previous orders, the ID of either the customer or store to search.
         public static int storeOrCustID { get; set; }
+        
     }
 }
 

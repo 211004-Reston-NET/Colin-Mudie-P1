@@ -34,6 +34,7 @@ namespace WebUI
             services.AddScoped<IOrderBL, OrderBL>();
             services.AddScoped<IProductBL, ProductBL>();
             services.AddScoped<IRepository, RepositoryCloud>();
+            services.AddRazorPages();
             
         }
 
@@ -55,6 +56,7 @@ namespace WebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
        
@@ -64,6 +66,7 @@ namespace WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

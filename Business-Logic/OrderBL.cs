@@ -12,9 +12,17 @@ namespace Business_Logic
         {
             _repo = p_repo;
         }
-        public List<Order> GetOrdersList(string p_customer_or_store, int p_id)
-        {   
-            List<Order> listOfOrders = _repo.GetOrdersList(p_customer_or_store, p_id);
+
+        public List<Order> GetOrdersListForCustomer(string p_customerId)
+        {
+            List<Order> listOfOrders = _repo.GetOrdersListForCustomer(p_customerId);
+            listOfOrders = _repo.AddLineItemsListToOrdersList(listOfOrders);
+            return listOfOrders;
+        }
+
+        public List<Order> GetOrdersListForStore(int p_storeId)
+        {
+            List<Order> listOfOrders = _repo.GetOrdersListForStore(p_storeId);
             listOfOrders = _repo.AddLineItemsListToOrdersList(listOfOrders);
             return listOfOrders;
         }
