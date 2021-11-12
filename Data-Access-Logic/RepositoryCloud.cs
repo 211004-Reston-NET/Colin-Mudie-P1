@@ -183,38 +183,40 @@ namespace Data_Access_Logic
 
         public List<StoreFront> GetStoreFrontList()
         {
-            return _context.Storefronts.Select(store =>
-                // converting Entities Storefront to StoreFront
-                new StoreFront()
-                {
-                    Name = store.Name,
-                    Address = store.Address,
-                    // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
-                    LineItems = store.LineItems.Select(item => new LineItems()
-                    {
-                        Quantity = item.Quantity,
-                        Product = new Product()
-                        {
-                            Name = item.Product.Name,
-                            Price = item.Product.Price,
-                            Description = item.Product.Description,
-                            Brand = item.Product.Brand,
-                            Category = item.Product.Category,
-                            ProductId = item.Product.ProductId
-                        },
-                        LineItemsId = item.LineItemsId
-                    }).ToList(),
-                    // 
-                    Order = store.Order.Select(order => new Order()
-                    {
-                        OrderId = order.OrderId,
-                        Address = order.Address,
-                        TotalPrice = order.TotalPrice
-                    }).ToList(),
-                    StoreFrontId = store.StoreFrontId
-                }
-            ).ToList();
-            // return _context.Storefronts.ToList();
+            // return _context.Storefronts.Select(store =>
+            //     // converting Entities Storefront to StoreFront
+            //     new StoreFront()
+            //     {
+            //         Name = store.Name,
+            //         Address = store.Address,
+            //         // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
+            //         LineItems = store.LineItems.Select(item => new LineItems()
+            //         {
+            //             Quantity = item.Quantity,
+            //             ProductId = item.ProductId,
+            //             StoreFrontId = item.StoreFrontId,
+            //             Product = new Product()
+            //             {
+            //                 Name = item.Product.Name,
+            //                 Price = item.Product.Price,
+            //                 Description = item.Product.Description,
+            //                 Brand = item.Product.Brand,
+            //                 Category = item.Product.Category,
+            //                 ProductId = item.Product.ProductId
+            //             },
+            //             LineItemsId = item.LineItemsId
+            //         }).ToList(),
+            //         // 
+            //         Order = store.Order.Select(order => new Order()
+            //         {
+            //             OrderId = order.OrderId,
+            //             Address = order.Address,
+            //             TotalPrice = order.TotalPrice
+            //         }).ToList(),
+            //         StoreFrontId = store.StoreFrontId
+            //     }
+            // ).ToList();
+            return _context.Storefronts.ToList();
         }
 
         public Order PlaceOrder(Customer p_customer, Order p_order)

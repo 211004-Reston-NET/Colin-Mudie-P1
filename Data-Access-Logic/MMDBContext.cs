@@ -31,49 +31,49 @@ namespace Data_Access_Logic
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.ToTable("customer");
+                entity.ToTable("Customer");
 
                 entity.HasIndex(e => e.Email, "UQ__customer__AB6E61642D925A68")
                     .IsUnique();
 
-                entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("address");
+                    .HasColumnName("Address");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("email");
+                    .HasColumnName("Email");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("name");
+                    .HasColumnName("Name");
 
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("phone_number");
+                    .HasColumnName("PhoneNumber");
             });
 
             modelBuilder.Entity<LineItems>(entity =>
             {
-                entity.ToTable("line_item");
+                entity.ToTable("lineItems");
 
-                entity.Property(e => e.LineItemsId).HasColumnName("line_item_id");
+                entity.Property(e => e.LineItemsId).HasColumnName("lineItemsId");
 
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
+                entity.Property(e => e.ProductId).HasColumnName("ProductId");
 
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
+                entity.Property(e => e.Quantity).HasColumnName("Quantity");
 
-                entity.Property(e => e.StoreFrontId).HasColumnName("storefront_id");
+                entity.Property(e => e.StoreFrontId).HasColumnName("StoreFrontId");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.LineItems)
@@ -91,23 +91,23 @@ namespace Data_Access_Logic
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("order_");
+                entity.ToTable("Order");
 
-                entity.Property(e => e.OrderId).HasColumnName("order_id");
+                entity.Property(e => e.OrderId).HasColumnName("OrderId");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("address");
+                    .HasColumnName("Address");
 
-                entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+                entity.Property(e => e.CustomerId).HasColumnName("CustomerId");
 
-                entity.Property(e => e.StoreFrontId).HasColumnName("storefront_id");
+                entity.Property(e => e.StoreFrontId).HasColumnName("StoreFrontId");
 
                 entity.Property(e => e.TotalPrice)
                     .HasColumnType("decimal(18, 0)")
-                    .HasColumnName("total_price");
+                    .HasColumnName("TotalPrice");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
@@ -125,56 +125,56 @@ namespace Data_Access_Logic
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("product");
+                entity.ToTable("Product");
 
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
+                entity.Property(e => e.ProductId).HasColumnName("ProductId");
 
                 entity.Property(e => e.Brand)
                     .IsRequired()
                     .HasMaxLength(60)
                     .IsUnicode(false)
-                    .HasColumnName("brand");
+                    .HasColumnName("Brand");
 
                 entity.Property(e => e.Category)
                     .IsRequired()
                     .HasMaxLength(60)
                     .IsUnicode(false)
-                    .HasColumnName("category");
+                    .HasColumnName("Category");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(750)
                     .IsUnicode(false)
-                    .HasColumnName("description");
+                    .HasColumnName("Description");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("name");
+                    .HasColumnName("Name");
 
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(5, 2)")
-                    .HasColumnName("price");
+                    .HasColumnName("Price");
             });
 
             modelBuilder.Entity<StoreFront>(entity =>
             {
-                entity.ToTable("storefront");
+                entity.ToTable("StoreFront");
 
-                entity.Property(e => e.StoreFrontId).HasColumnName("storefront_id");
+                entity.Property(e => e.StoreFrontId).HasColumnName("StoreFrontId");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("address");
+                    .HasColumnName("Address");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("name");
+                    .HasColumnName("Name");
             });
 
             OnModelCreatingPartial(modelBuilder);
