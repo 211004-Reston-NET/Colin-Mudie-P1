@@ -4,13 +4,18 @@
 @{
 
 }
+@using Microsoft.AspNetCore.Identity
+@using Models
 @using System.Linq
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
 @model IEnumerable<WebUI.Models.LineItemVM>
 @{
     var order = Model;
- }
+}
 
-<h1>Current Order</h1>
+<h1>Shopping Cart</h1>
+<p>@UserManager.GetUserId(User)  </p>
 <br />
 <button class="btn btn-secondary">@Html.ActionLink("Back", "Index", "LineItem", new { p_storeId = Model.Last().StoreFrontId }, new { @style = "color: white;" })</button>
 <br />

@@ -28,15 +28,6 @@ namespace Business_Logic
         Customer AddCustomer(Customer p_customer);
 
         /// <summary>
-        ///     This will grab the current list of customers, then grab the current list of Orders for our selected Customer,
-        ///     Then it will add our new order to the list and send back to the db.
-        /// </summary>
-        /// <param name="p_customer"> The customer that will be edited from the List of Customers </param>
-        /// <param name="p_order"> The Order that will be added to the list of Orders on our p_customer </param>
-        /// <returns> Will return the Order that was placed. </returns>
-        Order PlaceOrder(Customer p_customer, Order P_order);
-
-        /// <summary>
         /// Will update any values on a given customer. p_customer will contain the customer_id needed to locate the customer to update.
         /// </summary>
         /// <param name="p_customer"> the new values and id for the customer to update.</param>

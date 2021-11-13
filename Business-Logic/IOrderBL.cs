@@ -18,5 +18,11 @@ namespace Business_Logic
         /// <param name="p_customerId"> the matching ID corresponding to either the customer to find the list of orders from.</param>
         /// <returns> returns a list of Orders </returns>
         List<Order> GetOrdersListForCustomer(string p_customerId);
+
+        /// <summary>
+        ///     Will Find the Customer to add order to by CustomerId saved in Order, then add the Order them and send to DB.
+        /// </summary>
+        /// <param name="p_order"> The Order that will be added to the list of Orders on our p_customer </param>
+        void PlaceOrder(Order p_order);
     }
 }

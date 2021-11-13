@@ -31,13 +31,10 @@ namespace Data_Access_Logic
         List<LineItems> GetLineItemsList(int p_storeId);
 
         /// <summary>
-        ///     This will grab the current list of customers, then grab the current list of Orders for our selected Customer,
-        ///     Then it will add our new order to the list and send back to the db.
+        ///     Will Find the Customer to add order to by CustomerId saved on Order, then add the Order them and send to DB.
         /// </summary>
-        /// <param name="p_customer"> The customer that will be edited from the List of Customers </param>
         /// <param name="p_order"> The Order that will be added to the list of Orders on our p_customer </param>
-        /// <returns> Will return the Order that was placed. </returns>
-        Order PlaceOrder(Customer p_customer, Order p_order);
+        void PlaceOrder(Order p_order);
 
         /// <summary>
         /// This will grab the current list of products from db.

@@ -26,5 +26,10 @@ namespace Business_Logic
             listOfOrders = _repo.AddLineItemsListToOrdersList(listOfOrders);
             return listOfOrders;
         }
+
+        public void PlaceOrder(Order p_order)
+        {
+            _repo.PlaceOrder(p_order);
+        }
     }
 }

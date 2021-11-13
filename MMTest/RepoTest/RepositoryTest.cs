@@ -154,7 +154,7 @@ namespace MMTest
             {
                 //Arrange
                 IRepository repo = new RepositoryCloud(context);
-                string _custId = "1";
+                string _custId = "HL3";
 
                 //Act
                 var testCustomer = repo.GetOrdersListForCustomer(_custId);
@@ -197,6 +197,67 @@ namespace MMTest
                 //Assert
                 Assert.Equal(1, storeFound.StoreFrontId);
                 Assert.Equal("Test Store 1", storeFound.Name);
+            }
+        }
+
+        [Fact]
+        public void PlaceOrderShouldAddOrderToCustomerAndStoreFront()
+        {
+            using (var context = new MMDBContext(_options))
+            {
+                //Arrange
+                IRepository repo = new RepositoryCloud(context);
+                Order _orderToPlace = new Order()
+                {
+                    Address = "store 1 place",
+                    TotalPrice = 100,
+                    StoreFrontId = 1,
+                    CustomerId = "HL3",
+                    LineItems = new List<LineItems>
+                            {
+                                new LineItems
+                                {
+                                    StoreFrontId = 1,
+                                    LineItemsId = 3,
+                                    ProductId = 1,
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 1",
+                                        Price = 20,
+                                        Description = "a very nice product 1",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
+                                },
+                                new LineItems
+                                {
+                                    StoreFrontId = 1,
+                                    LineItemsId = 4,
+                                    ProductId = 2,
+                                    Quantity = 2,
+                                    Product = {
+                                        Name = "prod name 2",
+                                        Price = 12,
+                                        Description = "an even better product 2",
+                                        Brand = "Prod's Products",
+                                        Category = "really great prod"
+                                    }
+                                }
+                            }
+                };
+
+                //Act
+                repo.PlaceOrder(_orderToPlace);
+
+                //Assert
+                // needs to close the connection from earlier.
+                using (var contexts = new MMDBContext(_options))
+                {
+                    Order result = new Order();
+                    result = contexts.Orders.Find(9);
+                    Assert.NotNull(result);
+                    Assert.Equal("HL3", result.CustomerId);
+                }
             }
         }
 
@@ -275,13 +336,13 @@ namespace MMTest
                                     Address = "store 1 place",
                                     TotalPrice = 100,
                                     StoreFrontId = 1,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 },
                                 new Order {
                                     Address = "store 2 place",
                                     TotalPrice = 20,
                                     StoreFrontId = 2,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 }
                             }
                     },
@@ -327,13 +388,13 @@ namespace MMTest
                                     Address = "store 1 place",
                                     TotalPrice = 100,
                                     StoreFrontId = 1,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 },
                                 new Order {
                                     Address = "store 2 place",
                                     TotalPrice = 20,
                                     StoreFrontId = 1,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 }
                             }
                     }
@@ -348,7 +409,8 @@ namespace MMTest
                         LineItemsId = 1,
                         ProductId = 1,
                         Quantity = 7,
-                        Product = new Product {
+                        Product = new Product
+                        {
                             Name = "prod name 3",
                             Price = 20,
                             Description = "a very nice product 1",
@@ -362,7 +424,8 @@ namespace MMTest
                         LineItemsId = 2,
                         ProductId = 2,
                         Quantity = 2,
-                        Product = new Product {
+                        Product = new Product
+                        {
                             Name = "prod name 4",
                             Price = 12,
                             Description = "an even better product 2",
@@ -380,20 +443,20 @@ namespace MMTest
                         Address = "112 Streets st.",
                         Email = "colin@example.com",
                         PhoneNumber = "123-123-1234",
-                        Id = "1",
+                        Id = "HL3",
                         Order = new List<Order>
                             {
                                 new Order {
                                     Address = "store 1 place",
                                     TotalPrice = 100,
                                     StoreFrontId = 1,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 },
                                 new Order {
                                     Address = "store 2 place",
                                     TotalPrice = 20,
                                     StoreFrontId = 2,
-                                    CustomerId = "1"
+                                    CustomerId = "HL3"
                                 }
                             }
                     },
@@ -403,20 +466,20 @@ namespace MMTest
                         Address = "12 bonneyview",
                         Email = "kai@example.com",
                         PhoneNumber = "989-123-1234",
-                        Id = "2",
+                        Id = "H3LP",
                         Order = new List<Order>
                             {
                                 new Order {
                                     Address = "store 1 place",
                                     TotalPrice = 200,
                                     StoreFrontId = 2,
-                                    CustomerId = "2"
+                                    CustomerId = "H3LP"
                                 },
                                 new Order {
                                     Address = "store 2 place",
                                     TotalPrice = 40,
                                     StoreFrontId = 2,
-                                    CustomerId = "2"
+                                    CustomerId = "H3LP"
                                 }
                             }
                     }

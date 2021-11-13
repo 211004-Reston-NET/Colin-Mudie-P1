@@ -1,12 +1,14 @@
 ﻿using Business_Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNet.Identity;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Models;
+
 
 namespace WebUI.Controllers
 {
@@ -24,8 +26,7 @@ namespace WebUI.Controllers
         }
 
         // GET: OrderController
-
-        public ActionResult Index(int p_StoreId, int p_lineItemId)
+        public ActionResult Index(int p_lineItemId)
         {
             LineItems itemToAdd = _lineItemsBL.GetLineItemsById(p_lineItemId);
             if (itemToAdd != null)
@@ -41,6 +42,7 @@ namespace WebUI.Controllers
                 {
                     ViewData.Add("TotalPrice", 0);
                 }
+                
             }          
             return View(_currentOrder
                             .Select(item => new LineItemVM(item, _storeFrontBL.GetStoreFrontById(item.StoreFrontId)))
@@ -66,13 +68,34 @@ namespace WebUI.Controllers
         {
             try
             {
-
-                return RedirectToAction(nameof(Index));
+                Order _orderToPlace = new Order();
+                foreach(LineItems item in _currentOrder)
+                {
+                    _orderToPlace.LineItems.Add(item);
+                }
+                _orderToPlace.CustomerId = User.Identity.GetUserId();
+                _orderToPlace.StoreFrontId = _currentOrder[0].StoreFrontId;
+                _orderToPlace.Address = _storeFrontBL.GetStoreFrontById(_orderToPlace.StoreFrontId).Address;
+                _orderToPlace.TotalPrice = _currentOrder.Sum(item => item.Product.Price);
+                Console.WriteLine(_orderToPlace.CustomerId);
+                _orderBL.PlaceOrder(_orderToPlace);
+                _currentOrder.Clear();
+                return View(_orderToPlace.LineItems
+                                            .Select(item => new LineItemVM(item, _storeFrontBL.GetStoreFrontById(item.StoreFrontId)))
+                                            .ToList());
             }
-            catch
+            catch (System.Exception exception)
             {
-                return View();
+                Console.WriteLine(exception.Message);
+                return View(_currentOrder
+                            .Select(item => new LineItemVM(item, _storeFrontBL.GetStoreFrontById(item.StoreFrontId)))
+                            .ToList());
             }
+        }
+
+        public ActionResult Receipt()
+        {
+            return View();
         }
 
         // GET: OrderController/Edit/5
@@ -84,7 +107,7 @@ namespace WebUI.Controllers
         // POST: OrderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int p_StoreId, IFormCollection collection)
         {
             try
             {

@@ -18,7 +18,6 @@ namespace Data_Access_Logic
             : base(options)
         {
         }
-
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<LineItems> LineItems { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -31,7 +30,7 @@ namespace Data_Access_Logic
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.ToTable("Customer");
+                entity.ToTable("AspNetUsers");
 
                 entity.HasIndex(e => e.Email, "UQ__customer__AB6E61642D925A68")
                     .IsUnique();

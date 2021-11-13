@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business-Logic", "Business-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data-Access-Logic", "Data-Access-Logic\Data-Access-Logic.csproj", "{38D42B0A-3817-403D-904F-45EE629C4768}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User-Interface", "User-Interface\User-Interface.csproj", "{695D72FA-F168-4BDE-8BDE-9F056DC28CAC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MMTest", "MMTest\MMTest.csproj", "{5618A64A-D829-423C-A656-E92AD2A61657}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{EA0C244D-2C36-4A20-A981-646D9191B6B7}"

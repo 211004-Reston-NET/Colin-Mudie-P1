@@ -16,7 +16,6 @@ namespace Models
         private string _email;
         private string _phoneNumber;
         private List<Order> _order = new List<Order>();
-        public int CustomerId { get; set; }
 
         [PersonalData]
         public string Name

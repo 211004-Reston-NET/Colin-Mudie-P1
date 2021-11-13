@@ -60,12 +60,7 @@ namespace Data_Access_Logic
         public int GetLastOrderId()
         {
             int lastOrderId = 0;
-            var listOfOrders = _context.Orders.Select(order =>
-                new Order
-                {
-                    OrderId = order.OrderId,
-                }
-            ).ToList();
+            var listOfOrders = _context.Orders.ToList();
             foreach (Order ord in listOfOrders)
             {
                 if (ord.OrderId > lastOrderId)
@@ -154,27 +149,27 @@ namespace Data_Access_Logic
                                 Name = store.Name,
                                 Address = store.Address,
                                 // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
-                                LineItems = store.LineItems.Select(item => new LineItems()
-                                {
-                                    Quantity = item.Quantity,
-                                    Product = new Product()
-                                    {
-                                        Name = item.Product.Name,
-                                        Price = item.Product.Price,
-                                        Description = item.Product.Description,
-                                        Brand = item.Product.Brand,
-                                        Category = item.Product.Category,
-                                        ProductId = item.Product.ProductId
-                                    },
-                                    LineItemsId = item.LineItemsId
-                                }).ToList(),
-                                // 
-                                Order = store.Order.Select(order => new Order()
-                                {
-                                    OrderId = order.OrderId,
-                                    Address = order.Address,
-                                    TotalPrice = order.TotalPrice
-                                }).ToList(),
+                                //LineItems = store.LineItems.Select(item => new LineItems()
+                                //{
+                                //    Quantity = item.Quantity,
+                                //    Product = new Product()
+                                //    {
+                                //        Name = item.Product.Name,
+                                //        Price = item.Product.Price,
+                                //        Description = item.Product.Description,
+                                //        Brand = item.Product.Brand,
+                                //        Category = item.Product.Category,
+                                //        ProductId = item.Product.ProductId
+                                //    },
+                                //    LineItemsId = item.LineItemsId
+                                //}).ToList(),
+
+                                //Order = store.Order.Select(order => new Order()
+                                //{
+                                //    OrderId = order.OrderId,
+                                //    Address = order.Address,
+                                //    TotalPrice = order.TotalPrice
+                                //}).ToList(),
                                 StoreFrontId = store.StoreFrontId
                             }
                         )
@@ -183,52 +178,23 @@ namespace Data_Access_Logic
 
         public List<StoreFront> GetStoreFrontList()
         {
-            // return _context.Storefronts.Select(store =>
-            //     // converting Entities Storefront to StoreFront
-            //     new StoreFront()
-            //     {
-            //         Name = store.Name,
-            //         Address = store.Address,
-            //         // StoreFront.LineItems is a list of LineItems, in order to convert a list of Entities.LineItems to 
-            //         LineItems = store.LineItems.Select(item => new LineItems()
-            //         {
-            //             Quantity = item.Quantity,
-            //             ProductId = item.ProductId,
-            //             StoreFrontId = item.StoreFrontId,
-            //             Product = new Product()
-            //             {
-            //                 Name = item.Product.Name,
-            //                 Price = item.Product.Price,
-            //                 Description = item.Product.Description,
-            //                 Brand = item.Product.Brand,
-            //                 Category = item.Product.Category,
-            //                 ProductId = item.Product.ProductId
-            //             },
-            //             LineItemsId = item.LineItemsId
-            //         }).ToList(),
-            //         // 
-            //         Order = store.Order.Select(order => new Order()
-            //         {
-            //             OrderId = order.OrderId,
-            //             Address = order.Address,
-            //             TotalPrice = order.TotalPrice
-            //         }).ToList(),
-            //         StoreFrontId = store.StoreFrontId
-            //     }
-            // ).ToList();
             return _context.Storefronts.ToList();
         }
 
-        public Order PlaceOrder(Customer p_customer, Order p_order)
+        public void PlaceOrder(Order p_order)
         {
+            // _context.Orders.Add(p_order);
+            // _context.SaveChanges();
             // add order to customer's list of orders
-            var customer = _context.Customers
-                                .First<Customer>(cust => cust.Id == p_customer.Id);
+            // Customer customer = new Customer();
+            var customer = _context.Customers.Find(p_order.CustomerId);
+                            // .AsNoTracking()
+                            
+            // Console.WriteLine(customer.Id);
             customer.Order.Add(p_order);
             _context.SaveChanges();
-            int lastOrderId = GetLastOrderId();
-            UpdateStock(lastOrderId, p_order);
-            return p_order;
+            // int lastOrderId = GetLastOrderId();
+            // UpdateStock(lastOrderId, p_order);
         }
 
         public void RefreshStock(int p_lineItemId, int p_quantity)
