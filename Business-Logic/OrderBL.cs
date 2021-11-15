@@ -13,6 +13,11 @@ namespace Business_Logic
             _repo = p_repo;
         }
 
+        public Order GetOrderById(int p_orderId)
+        {
+            return _repo.GetOrderById(p_orderId);
+        }
+
         public List<Order> GetOrdersListForCustomer(string p_customerId)
         {
             List<Order> listOfOrders = _repo.GetOrdersListForCustomer(p_customerId);

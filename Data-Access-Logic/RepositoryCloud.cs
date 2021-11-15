@@ -56,7 +56,6 @@ namespace Data_Access_Logic
         {
             return _context.Customers.ToList();
         }
-
         public int GetLastOrderId()
         {
             int lastOrderId = 0;
@@ -183,18 +182,9 @@ namespace Data_Access_Logic
 
         public void PlaceOrder(Order p_order)
         {
-            // _context.Orders.Add(p_order);
-            // _context.SaveChanges();
-            // add order to customer's list of orders
-            // Customer customer = new Customer();
             var customer = _context.Customers.Find(p_order.CustomerId);
-                            // .AsNoTracking()
-                            
-            // Console.WriteLine(customer.Id);
             customer.Order.Add(p_order);
             _context.SaveChanges();
-            // int lastOrderId = GetLastOrderId();
-            // UpdateStock(lastOrderId, p_order);
         }
 
         public void RefreshStock(int p_lineItemId, int p_quantity)
@@ -230,6 +220,14 @@ namespace Data_Access_Logic
             }
             //save these changes
             _context.SaveChanges();
+        }
+
+        public Order GetOrderById(int p_orderId)
+        {
+            return _context.Orders
+                        .Include("LineItems")
+                        .Include("Customer")
+                        .FirstOrDefault(ord => ord.OrderId == p_orderId);
         }
     }
 }

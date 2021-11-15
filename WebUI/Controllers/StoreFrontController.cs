@@ -1,6 +1,7 @@
 ﻿using Business_Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,13 @@ namespace WebUI.Controllers
     public class StoreFrontController : Controller
     {
         private IStoreFrontBL _storeBL;
-        public StoreFrontController(IStoreFrontBL p_storeBL)
+        private IOrderBL _orderBL;
+        private ILineItemsBL _lineItemsBL;
+        public StoreFrontController(IStoreFrontBL p_storeBL, IOrderBL p_orderBL, ILineItemsBL p_lineItemsBL)
         {
             _storeBL = p_storeBL;
+            _orderBL = p_orderBL;
+            _lineItemsBL = p_lineItemsBL;
         }
         // GET: StoreFront
         public ActionResult Index()
@@ -25,73 +30,34 @@ namespace WebUI.Controllers
                 );
         }
 
-        // GET: StoreFront/Details/5
-        public ActionResult Details(int id)
+       public ActionResult OrderList(int p_id)
         {
-            return View();
+            StoreFront _storeFound = _storeBL.GetStoreFrontById(p_id);
+            List<Order> listOfOrders = _orderBL.GetOrdersListForStore(p_id);
+            return View(listOfOrders
+                            .Select(ord => new OrderVM(ord))
+                            .ToList()
+                   );
         }
 
-        // GET: StoreFront/Create
-        public ActionResult Create()
+        public ActionResult PreviousOrder(int p_orderId)
         {
-            return View();
-        }
+            List<LineItems> itemList = new List<LineItems>();
+            Order orderToShow = _orderBL.GetOrderById(p_orderId);
+            foreach(LineItems item in orderToShow.LineItems)
+            {
+                itemList.Add(_lineItemsBL.GetLineItemsById(item.LineItemsId));
+            }
 
-        // POST: StoreFront/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: StoreFront/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: StoreFront/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: StoreFront/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: StoreFront/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            ViewData.Add("OrderId", orderToShow.OrderId);
+            ViewData.Add("Address", orderToShow.Address);
+            ViewData.Add("CustomerName", orderToShow.Customer.Name);
+            ViewData.Add("TotalPrice", orderToShow.TotalPrice);
+            
+            return View(itemList
+                            .Select(item => new LineItemVM(item))
+                            .ToList()
+                       );
         }
     }
 }

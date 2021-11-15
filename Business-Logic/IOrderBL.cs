@@ -24,5 +24,12 @@ namespace Business_Logic
         /// </summary>
         /// <param name="p_order"> The Order that will be added to the list of Orders on our p_customer </param>
         void PlaceOrder(Order p_order);
+
+        /// <summary>
+        /// Finds and returns an order with the matching ID.
+        /// </summary>
+        /// <param name="p_orderId"> The ID to search for </param>
+        /// <returns>The Order found</returns>
+        Order GetOrderById(int p_orderId);
     }
 }

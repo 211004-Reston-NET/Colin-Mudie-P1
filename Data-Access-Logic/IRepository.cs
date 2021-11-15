@@ -111,5 +111,12 @@ namespace Data_Access_Logic
         /// <param name="p_storeId"> The ID for the store to find </param>
         /// <returns> Will return a single storefront. </returns>
         StoreFront GetStoreFrontById(int p_storeId);
+
+        /// <summary>
+        /// Finds and returns an order with the matching ID.
+        /// </summary>
+        /// <param name="p_orderId"> The ID to search for </param>
+        /// <returns>The Order found</returns>
+        Order GetOrderById(int p_orderId);
     }
 }

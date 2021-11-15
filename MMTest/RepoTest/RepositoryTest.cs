@@ -260,6 +260,22 @@ namespace MMTest
                 }
             }
         }
+        
+        [Fact]
+        public void FindOrderByIdShouldReturnTheCorrectOrder()
+        {
+            using (var context = new MMDBContext(_options))
+            {
+                IRepository repo = new RepositoryCloud(context);
+                int _orderId = 1;
+
+                Order result = repo.GetOrderById(_orderId);
+
+                Assert.NotNull(result);
+                Assert.Equal(1, result.OrderId);
+                Assert.NotNull(result.LineItems);
+            }
+        }
 
         private void Seed()
         {

@@ -8,6 +8,7 @@
 <h1>List of Products</h1>
 <br />
 <button class="btn btn-secondary">@Html.ActionLink("Back", "Index", "StoreFront", new { },  new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("View Previous Orders", "OrderList", "StoreFront", new { p_id = Model.ElementAt(0).StoreFrontId}, new { @style = "color: white;" })</button>
 <br />
 <br />
 <table class="table table-striped table-hover">
