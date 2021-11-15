@@ -72,12 +72,12 @@ jobs:
     - name: Upload sonarscanner report
       uses: actions/upload-artifact@v2
       with:
-        name: RRWebUI
+        name: WebUI
         path: ./publish
     
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
-        app-name: Michigan-Modular-Web-App # Replace this with your web app name
+        app-name: MMDB # Replace this with your web app name
         publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
         package: ./publish
