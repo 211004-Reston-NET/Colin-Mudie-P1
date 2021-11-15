@@ -21,7 +21,8 @@ namespace WebUI.Areas.Identity
                         context.Configuration.GetConnectionString("TestDBContextConnection")));
 
                 services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddEntityFrameworkStores<TestDBContext>();
+                    .AddEntityFrameworkStores<TestDBContext>()
+                    .AddDefaultTokenProviders();
             });
         }
     }
