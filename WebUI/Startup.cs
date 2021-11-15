@@ -3,6 +3,7 @@ using Data_Access_Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebUI.Data;
 
 namespace WebUI
 {
@@ -28,6 +30,7 @@ namespace WebUI
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TestDBContext>();
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
             services.AddScoped<ICustomerBL, CustomerBL>();
             services.AddScoped<ILineItemsBL, LineItemsBL>();
@@ -59,7 +62,7 @@ namespace WebUI
             app.UseAuthentication();
             app.UseAuthorization();
 
-       
+        
 
             app.UseEndpoints(endpoints =>
             {
