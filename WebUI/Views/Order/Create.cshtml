@@ -3,4 +3,31 @@
 *@
 @{
 }
+@model IEnumerable<WebUI.Models.LineItemVM>
 <h1>Receipt</h1>
+<br />
+<button class="btn btn-secondary">@Html.ActionLink("Home", "Index", "Home", new { p_storeId = Model.Last().StoreFrontId }, new { @style = "color: white;" })</button>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    @foreach (LineItemVM item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+        </tr>
+    }
+</table>
+<h5>Address: @ViewData["Address"]</h5>
+<br />
+<h5>Total Price: @ViewData["TotalPrice"]</h5>
+<br />

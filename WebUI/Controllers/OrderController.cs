@@ -77,9 +77,10 @@ namespace WebUI.Controllers
                 _orderToPlace.StoreFrontId = _currentOrder[0].StoreFrontId;
                 _orderToPlace.Address = _storeFrontBL.GetStoreFrontById(_orderToPlace.StoreFrontId).Address;
                 _orderToPlace.TotalPrice = _currentOrder.Sum(item => item.Product.Price);
-                Console.WriteLine(_orderToPlace.CustomerId);
                 _orderBL.PlaceOrder(_orderToPlace);
                 _currentOrder.Clear();
+                ViewData.Add("TotalPrice", _orderToPlace.TotalPrice);
+                ViewData.Add("Address", _orderToPlace.Address);
                 return View(_orderToPlace.LineItems
                                             .Select(item => new LineItemVM(item, _storeFrontBL.GetStoreFrontById(item.StoreFrontId)))
                                             .ToList());

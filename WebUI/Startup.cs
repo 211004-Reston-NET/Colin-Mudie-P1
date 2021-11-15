@@ -30,7 +30,7 @@ namespace WebUI
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TestDBContext>();
+            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TestDBContext>();
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
             services.AddScoped<ICustomerBL, CustomerBL>();
             services.AddScoped<ILineItemsBL, LineItemsBL>();
