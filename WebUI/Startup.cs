@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,15 +31,29 @@ namespace WebUI
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<MMDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MMDB")));
-            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<TestDBContext>();
+            services.AddDbContext<TestDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestDBContextConnection")));
+            services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
+                        .AddEntityFrameworkStores<TestDBContext>()
+                        .AddDefaultTokenProviders();
+           // services.AddIdentity<Customer>(options => options.Cookies.ApplicationCookie.LoginPath = new PathString("/Admin/Account/Login"));
             services.AddScoped<IStoreFrontBL, StoreFrontBL>();
             services.AddScoped<ICustomerBL, CustomerBL>();
             services.AddScoped<ILineItemsBL, LineItemsBL>();
             services.AddScoped<IOrderBL, OrderBL>();
             services.AddScoped<IProductBL, ProductBL>();
             services.AddScoped<IRepository, RepositoryCloud>();
-            services.AddRazorPages();
-            
+            services
+                .AddAuthentication()
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/login";
+                    options.LogoutPath = "/logout";
+                });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Login";
+                options.LogoutPath = $"/Logout";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +73,7 @@ namespace WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -69,7 +84,6 @@ namespace WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
         }
     }
