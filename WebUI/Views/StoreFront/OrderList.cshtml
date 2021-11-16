@@ -9,6 +9,12 @@
 <br />
 <br />
 <h1>StoreFront Previous Order</h1>
+<button class="btn btn-secondary">@Html.ActionLink("Order no. Asc.", "OrderList", "StoreFront", new { p_id = Model.ElementAt(0).StoreFrontId, p_sort = "OrderAsc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Order no. Desc.", "OrderList", "StoreFront", new { p_id = Model.ElementAt(0).StoreFrontId, p_sort = "OrderDesc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Price Asc.", "OrderList", "StoreFront", new { p_id = Model.ElementAt(0).StoreFrontId, p_sort = "PriceAsc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Price Desc.", "OrderList", "StoreFront", new { p_id = Model.ElementAt(0).StoreFrontId, p_sort = "PriceDesc" }, new { @style = "color: white;" })</button>
+<br />
+<br />
 <table class="table table-striped table-hover">
     <tr>
         <th></th>

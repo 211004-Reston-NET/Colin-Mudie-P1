@@ -30,10 +30,37 @@ namespace WebUI.Controllers
                 );
         }
 
-       public ActionResult OrderList(int p_id)
+       //public ActionResult OrderList(int p_id)
+       // {
+       //     StoreFront _storeFound = _storeBL.GetStoreFrontById(p_id);
+       //     List<Order> listOfOrders = _orderBL.GetOrdersListForStore(p_id);
+       //     return View(listOfOrders
+       //                     .Select(ord => new OrderVM(ord))
+       //                     .ToList()
+       //            );
+       // }
+
+        public ActionResult OrderList(int p_id, string p_sort)
         {
             StoreFront _storeFound = _storeBL.GetStoreFrontById(p_id);
             List<Order> listOfOrders = _orderBL.GetOrdersListForStore(p_id);
+            switch (p_sort)
+            {
+                case "OrderAsc":
+                    listOfOrders = listOfOrders.OrderBy(ord => ord.OrderId).ToList();
+                    break;
+                case "OrderDesc":
+                    listOfOrders = listOfOrders.OrderByDescending(ord => ord.OrderId).ToList();
+                    break;
+                case "PriceAsc":
+                    listOfOrders = listOfOrders.OrderBy(ord => ord.TotalPrice).ToList();
+                    break;
+                case "PriceDesc":
+                    listOfOrders = listOfOrders.OrderByDescending(ord => ord.TotalPrice).ToList();
+                    break;
+                default:
+                    break;
+            }
             return View(listOfOrders
                             .Select(ord => new OrderVM(ord))
                             .ToList()
