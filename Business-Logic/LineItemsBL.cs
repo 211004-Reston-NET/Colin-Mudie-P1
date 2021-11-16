@@ -36,9 +36,9 @@ namespace Business_Logic
             return result[0];
         }
 
-        public void RefreshStock(int p_lineItemId, int p_quantity)
+        public void RefreshStock(LineItems p_lineItem)
         {
-            _repo.RefreshStock(p_lineItemId, p_quantity);
+            _repo.RefreshStock(p_lineItem);
         }
 
         

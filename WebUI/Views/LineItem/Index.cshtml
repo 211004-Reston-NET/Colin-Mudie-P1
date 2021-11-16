@@ -20,6 +20,7 @@
         <th>Brand</th>
         <th>Category</th>
         <th>Description</th>
+        <th></th>
     </tr>
     @foreach (LineItemVM item in Model)
     {
@@ -31,6 +32,7 @@
             <td>@Html.DisplayFor(modelItem => item.Brand)</td>
             <td>@Html.DisplayFor(modelItem => item.Category)</td>
             <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td><button class="btn btn-secondary">@Html.ActionLink("Edit Stock", "Edit", new { p_id = item.LineItemId }, new { @style = "color: white;" })</button></td>
         </tr>
     }
 </table>

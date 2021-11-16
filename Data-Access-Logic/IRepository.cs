@@ -86,11 +86,10 @@ namespace Data_Access_Logic
         List<Order> AddLineItemsListToOrdersList(List<Order> p_orderList);
 
         /// <summary>
-        /// This Method will update the stock of a given LineItem (p_lineItemId) to the quantity provided (p_quantity)
+        /// This Method will update the stock of a given LineItem (p_lineItem.LineItemId) to the quantity provided (p_lineItem.Quantity)
         /// </summary>
-        /// /// <param name="p_lineItemId"> this is the ID for the LineItem that will be updated. </param>
-        /// <param name="p_quantity"> This is the quantity that the LineItem will be updated to. </param>
-        void RefreshStock(int p_lineItemId, int p_quantity);
+        /// /// <param name="p_lineItem"> this is the ID for the LineItem that will be updated. </param>
+        void RefreshStock(LineItems p_lineItem);
 
         /// <summary>
         /// Will update any values on a given customer. p_customer will contain the customer_id needed to locate the customer to update.

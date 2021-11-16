@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model WebUI.Models.LineItemVM
+
+<h1>Edit Stock</h1>
+<form asp-action="Edit">
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label">Quantity:</label>
+        <input asp-for="Quantity" type="text" class="form-control">
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="LineItemId" />
+    <button type="submit" class="btn btn-primary" value="Edit">Submit</button>
+</form>

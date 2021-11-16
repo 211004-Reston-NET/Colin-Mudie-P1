@@ -13,13 +13,6 @@ namespace Business_Logic
         List<LineItems> GetLineItems(int p_storeId);
 
         /// <summary>
-        /// This Method will update the stock of a given LineItem (p_lineItemId) to the quantity provided (p_quantity)
-        /// </summary>
-        /// /// <param name="p_lineItemId"> this is the ID for the LineItem that will be updated. </param>
-        /// <param name="p_quantity"> This is the quantity that the LineItem will be updated to. </param>
-        void RefreshStock(int p_lineItemId, int p_quantity);
-
-        /// <summary>
         /// This method will take a search parameter from a user and locate a line Item from 
         /// the given storeId that contains the name searched for.
         /// </summary>
@@ -34,5 +27,11 @@ namespace Business_Logic
         /// <param name="p_lineItemId"> the ID of the lineItem to find </param>
         /// <returns> LineItem to be found </returns>
         LineItems GetLineItemsById(int p_lineItemId);
+
+        /// <summary>
+        /// This Method will update the stock of a given LineItem (p_lineItem.LineItemId) to the quantity provided (p_lineItem.Quantity)
+        /// </summary>
+        /// /// <param name="p_lineItem"> this is the ID for the LineItem that will be updated. </param>
+        void RefreshStock(LineItems p_lineItem);
     }
 }

@@ -71,6 +71,12 @@ namespace WebUI.Controllers
                 Order _orderToPlace = new Order();
                 foreach(LineItems item in _currentOrder)
                 {
+                    if (_orderToPlace.LineItems.Exists(li => li.LineItemsId == item.LineItemsId))
+                    {
+                        LineItems itemToEdit = _orderToPlace.LineItems.FirstOrDefault(li => li.LineItemsId == item.LineItemsId);
+                        int indexToEdit = _orderToPlace.LineItems.IndexOf(itemToEdit);
+                        _orderToPlace.LineItems[indexToEdit].Quantity++;
+                    }
                     _orderToPlace.LineItems.Add(item);
                 }
                 _orderToPlace.CustomerId = User.Identity.GetUserId();

@@ -26,71 +26,31 @@ namespace WebUI.Controllers
                 );
         }
 
-        // GET: LineItem/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LineItem/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LineItem/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: LineItem/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int p_id)
         {
-            return View();
+            LineItems itemFound = _lineItemBL.GetLineItemsById(p_id);
+            return View(new LineItemVM(itemFound));
         }
 
         // POST: LineItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(LineItemVM p_lineItemVM, int LineItemId)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                LineItems itemToUpdate = _lineItemBL.GetLineItemsById(LineItemId);
+                itemToUpdate.Quantity = p_lineItemVM.Quantity;
+                _lineItemBL.RefreshStock(itemToUpdate);
+                return RedirectToAction("Index", new
+                {
+                    p_storeId = itemToUpdate.StoreFrontId
+                });
             }
-            catch
+            catch (System.Exception exception)
             {
-                return View();
-            }
-        }
-
-        // GET: LineItem/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LineItem/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+                Console.WriteLine(exception.Message);
                 return View();
             }
         }
