@@ -1,5 +1,7 @@
 # Michigan Modular
 
+## Published at Microsoft Azure App Services
+- https://michigan-modular-web-app.azurewebsites.net/
 
 ## Description
 Michigan Modular is a Store App which will allow a user to view a fake store selling Eurorack Modular Synthesizer Modules.
@@ -32,11 +34,15 @@ Then I am able to edit any of my saved information or view any previous orders I
 
 ## Technologies
 * C#
-* .Net Framwork
+* ASP.Net MVC Framwork
+* ASP.Net Identity
 * MS SQL 
 * Microsoft Azure
-* Entity Framwork
-* GitHub
+* Entity Framwork (code first approach)
+* LINQ
+* CI/CD Pipeline
+* SonorCloud Code Analysis
+* Xunit (unit testing)
 
 
 ## Contributors
@@ -46,6 +52,8 @@ Then I am able to edit any of my saved information or view any previous orders I
 
 ## Links
 [GitHub Repository](https://github.com/211004-Reston-NET/Colin-Mudie-P1)
+
+## License
 
 MIT License
 
