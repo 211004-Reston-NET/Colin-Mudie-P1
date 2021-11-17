@@ -10,7 +10,7 @@ using WebUI.Models;
 
 namespace WebUI.Controllers
 {
-    //[Authorize]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,7 +22,6 @@ namespace WebUI.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.CustName = CustomerController.cust.Name;
             return View();
         }
 

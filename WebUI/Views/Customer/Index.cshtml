@@ -1,33 +1,47 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model WebUI.Models.CustomerVM
-<h1 >Create Account</h1>
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label">Name:</label>
-        <input asp-for="Name" type="text" class="form-control">
-        <span asp-validation-for="Name" class="text-danger"></span>
+@using Microsoft.AspNetCore.Identity
+@using Models
+@inject UserManager<Customer> UserManager
+@{
+    var _user = UserManager.Users.FirstOrDefault(u => u.Id == UserManager.GetUserId(User));
+}
+@model IEnumerable<WebUI.Models.OrderVM>
+<!-- Card -->
+<h1>Account Details</h1>
+<div class="card border-primary" style="width: 36rem;">
+    <div class="card-body">
+        <h2 class="card-title display-4">@_user.Name</h2>
+        <h3 class="card-subtitle mb-2">Email: @_user.Email</h3>
+        <h3 class="card-subtitle mb-2">Phone: @_user.PhoneNumber</h3>
+        <h3 class="card-subtitle mb-2">Address: @_user.Address</h3>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Email:</label>
-        <input asp-for="Email" type="email" class="form-control">
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Address" class="form-label">Address:</label>
-        <input asp-for="Address" type="text" class="form-control">
-        <span asp-validation-for="Address" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="PhoneNumber" class="form-label">Phone Number:</label>
-        <input asp-for="PhoneNumber" type="text" class="form-control">
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary" value="Create">Submit</button>
-</form>
+</div>
+<br />
+<br />
+<!-- Orders List -->
+<h1>Previous Orders</h1>
+<button class="btn btn-secondary">@Html.ActionLink("Order no. Asc.", "Index", new { p_sort = "OrderAsc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Order no. Desc.", "Index", new { p_sort = "OrderDesc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Price Asc.", "Index", new { p_sort = "PriceAsc" }, new { @style = "color: white;" })</button>
+<button class="btn btn-secondary">@Html.ActionLink("Price Desc.", "Index", new { p_sort = "PriceDesc" }, new { @style = "color: white;" })</button>
+<br />
+<br />
+<table class="table table-striped table-hover">
+    <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Address</th>
+        <th>Total Price</th>
+    </tr>
+    @foreach (OrderVM item in Model)
+    {
+        <tr>
+            <td><button class="btn btn-primary">@Html.ActionLink("View", "PreviousOrder", "Customer", new { p_orderId = item.OrderId }, new { @style = "color: white;" })</button></td>
+            <td>@Html.DisplayFor(modelItem => item.OrderId)</td>
+            <td>@Html.DisplayFor(modelItem => item.Address)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+        </tr>
+    }
+</table>

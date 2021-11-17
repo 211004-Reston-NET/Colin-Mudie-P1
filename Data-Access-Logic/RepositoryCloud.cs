@@ -95,9 +95,6 @@ namespace Data_Access_Logic
 
         public List<LineItems> GetLineItemsList(int p_storeId)
         {
-            // return _context.LineItems
-            //             .Include("Product")
-            //             .Where(item => item.StoreFront.StoreFrontId == p_storeId).ToList();
             return _context.LineItems
                         .Where(item => item.StoreFront.StoreFrontId == p_storeId)
                         .Select(item =>
@@ -149,6 +146,7 @@ namespace Data_Access_Logic
                                 StoreFrontId = store.StoreFrontId
                             }
                         )
+                    .AsNoTracking()
                     .FirstOrDefault(store => store.StoreFrontId == p_storeId);
         }
 
@@ -159,7 +157,9 @@ namespace Data_Access_Logic
 
         public void PlaceOrder(Order p_order)
         {
-            var customer = _context.Customers.Find(p_order.CustomerId);
+            var customer = _context.Customers
+                                        .AsNoTracking()
+                                        .FirstOrDefault(cust => cust.Id == p_order.CustomerId);
             customer.Order.Add(p_order);
             _context.SaveChanges();
         }
@@ -182,14 +182,6 @@ namespace Data_Access_Logic
         {
             foreach (LineItems item in p_order.LineItems)
             {
-                // add each item to the order using line_item_order
-                //FIX THIS                
-                // _context.LineItemOrders.Add(new LineItemOrder()
-                // {
-                //     LineItemsId = item.LineItemsId,
-                //     OrderId = p_orderId
-                // });
-                // update stock in correct storefront's lineItems
                 var stockUpdate = _context.LineItems.FirstOrDefault<LineItems>(dbItem => dbItem.LineItemsId == item.LineItemsId);
                 stockUpdate.Quantity = stockUpdate.Quantity - item.Quantity;
             }

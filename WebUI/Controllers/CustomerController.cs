@@ -1,5 +1,7 @@
 ﻿using Business_Logic;
+
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
@@ -12,113 +14,62 @@ namespace WebUI.Controllers
 {
     public class CustomerController : Controller
     {
-        public static Customer cust = new Customer();
         private ICustomerBL _customerBL;
-        public CustomerController(ICustomerBL p_custBL)
+        private IOrderBL _orderBL;
+        private readonly UserManager<Customer> _userManager;
+        private ILineItemsBL _lineItemsBL;
+        public CustomerController(ICustomerBL p_custBL, IOrderBL p_orderBL, UserManager<Customer> userManager, ILineItemsBL p_lineItemsBL)
         {
             _customerBL = p_custBL;
+            _orderBL = p_orderBL;
+            _userManager = userManager;
+            _lineItemsBL = p_lineItemsBL;
         }
 
         // GET: HomeController1
-        public ActionResult Index()
+        public ActionResult Index(string p_sort)
         {
-            return View();
-        }
-
-        // GET: HomeController1/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: HomeController1/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CustomerVM custVM)
-        {
-            try
+            List<Order> listOfOrders = _orderBL.GetOrdersListForCustomer(_userManager.GetUserId(User));
+            switch (p_sort)
             {
-                _customerBL.AddCustomer(new Customer()
-                {
-                    Name = custVM.Name,
-                    Email = custVM.Email,
-                    Address = custVM.Address,
-                    PhoneNumber = custVM.PhoneNumber
-                });
-                return RedirectToAction(nameof(Index));
+                case "OrderAsc":
+                    listOfOrders = listOfOrders.OrderBy(ord => ord.OrderId).ToList();
+                    break;
+                case "OrderDesc":
+                    listOfOrders = listOfOrders.OrderByDescending(ord => ord.OrderId).ToList();
+                    break;
+                case "PriceAsc":
+                    listOfOrders = listOfOrders.OrderBy(ord => ord.TotalPrice).ToList();
+                    break;
+                case "PriceDesc":
+                    listOfOrders = listOfOrders.OrderByDescending(ord => ord.TotalPrice).ToList();
+                    break;
+                default:
+                    break;
             }
-            catch
-            {
-                return View();
-            }
+            return View(listOfOrders
+                            .Select(ord => new OrderVM(ord))
+                            .ToList()
+                    );
         }
 
-        // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult PreviousOrder(int p_orderId)
         {
-            return View();
-        }
+            List<LineItems> itemList = new List<LineItems>();
+            Order orderToShow = _orderBL.GetOrderById(p_orderId);
+            foreach (LineItems item in orderToShow.LineItems)
+            {
+                itemList.Add(_lineItemsBL.GetLineItemsById(item.LineItemsId));
+            }
+            ViewData.Add("OrderId", orderToShow.OrderId);
+            ViewData.Add("Address", orderToShow.Address);
+            ViewData.Add("CustomerName", orderToShow.Customer.Name);
+            ViewData.Add("TotalPrice", orderToShow.TotalPrice);
 
-        [HttpGet]
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(CustomerVM custVM)
-        {
-            try
-            {
-                CustomerController.cust = _customerBL.GetSingleCustomer(custVM.Name, custVM.Email);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: HomeController1/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(itemList
+                            .Select(item => new LineItemVM(item))
+                            .ToList()
+                       );
         }
     }
 }

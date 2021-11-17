@@ -64,7 +64,7 @@ namespace WebUI.Controllers
             return View(listOfOrders
                             .Select(ord => new OrderVM(ord))
                             .ToList()
-                   );
+                    );
         }
 
         public ActionResult PreviousOrder(int p_orderId)

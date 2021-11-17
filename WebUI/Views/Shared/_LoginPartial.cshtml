@@ -16,7 +16,7 @@
     <!-- Right Navbar -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
+            <a id="manage" class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index" title="Manage">@UserManager.GetUserName(User)</a>
         </li>
         <li class="nav-item ">
             <form id="logoutForm" class="form-inline" asp-area="" asp-controller="Logout" asp-action="Index">
