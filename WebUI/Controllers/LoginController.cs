@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 
 namespace WebUI.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         //Required dependencies to create user for us and also authorize them

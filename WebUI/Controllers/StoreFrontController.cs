@@ -1,4 +1,5 @@
 ﻿using Business_Logic;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -7,9 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebUI.Controllers
-{
+{ 
+    [Authorize]
     public class StoreFrontController : Controller
     {
         private IStoreFrontBL _storeBL;
@@ -30,18 +33,12 @@ namespace WebUI.Controllers
                 );
         }
 
-       //public ActionResult OrderList(int p_id)
-       // {
-       //     StoreFront _storeFound = _storeBL.GetStoreFrontById(p_id);
-       //     List<Order> listOfOrders = _orderBL.GetOrdersListForStore(p_id);
-       //     return View(listOfOrders
-       //                     .Select(ord => new OrderVM(ord))
-       //                     .ToList()
-       //            );
-       // }
-
         public ActionResult OrderList(int p_id, string p_sort)
         {
+            if (User.Identity.IsAuthenticated == false)
+            {
+                Response.Redirect("/login");
+            }
             StoreFront _storeFound = _storeBL.GetStoreFrontById(p_id);
             List<Order> listOfOrders = _orderBL.GetOrdersListForStore(p_id);
             switch (p_sort)

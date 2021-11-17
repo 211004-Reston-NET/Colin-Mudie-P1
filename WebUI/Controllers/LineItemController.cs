@@ -1,4 +1,5 @@
 ﻿using Business_Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -10,6 +11,7 @@ using WebUI.Models;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class LineItemController : Controller
     {
         private ILineItemsBL _lineItemBL;
