@@ -4,14 +4,35 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
 <div class="text-center">
-    <h1>Michigan Modular</h1>
-    <p>@ViewBag.CustName</p>
-    <a asp-controller="Register" asp-action="Index">Create Account</a>
+    <h1 class="display-2">Michigan Modular</h1>
     <br />
-    <a asp-controller="Login" asp-action="Index">Login</a>
     <br />
-    <a asp-controller="StoreFront" asp-action="Index">View Stores</a>
     <br />
+    <h4>Mission Statement</h4>
+    <p>
+        Detroit is widely regarded as the birthplace of Electronic Music, and Michigan Modular aimes to spread that legacy throughout the Michigan area.
+        Specializing in eurorack modular synthesizers, Michigan Modular focuses squarely on the modern electronic music producer.
+        With a full array of MIDI and CV control equipment, effects processors, Michigan Modular has the fuel for those who produce on the bleeding edge of technology.
+    </p>
+    <br />
+    <br />
+    <h4>Low Price Guarantee</h4>
+    <p>
+        Bring a link to another retailer selling an item for less and we will match that offer!
+        We also love to put together full modular systems at a nice discount.
+    </p>
+    <br />
+    <br />
+    <h4>Free Shipping</h4>
+    <p>
+        We offer free shipping on most orders over $100 via insured UPS ground to the continental USA.
+        Express shipping is also available in case you need the new gear now.
+    </p>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h2><a class="nav-link text-dark" asp-area="" asp-controller="StoreFront" asp-action="Index">Come Join Us With The World's Most Expensive Hobby!</a></h2>
 </div>

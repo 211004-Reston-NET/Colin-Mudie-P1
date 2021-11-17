@@ -72,7 +72,9 @@ namespace Data_Access_Logic
 
         public LineItems GetLineItemsById(int p_lineItemId)
         {
-            return _context.LineItems.Select(item =>
+            return _context.LineItems
+                            .AsNoTracking()
+                            .Select(item =>
                             new LineItems()
                             {
                                 Product = new Product()
@@ -90,6 +92,7 @@ namespace Data_Access_Logic
                                 ProductId = item.ProductId
                             })
                         .ToList()
+                        
                         .FirstOrDefault(item => item.LineItemsId == p_lineItemId);
         }
 
@@ -97,6 +100,7 @@ namespace Data_Access_Logic
         {
             return _context.LineItems
                         .Where(item => item.StoreFront.StoreFrontId == p_storeId)
+                        .AsNoTracking()
                         .Select(item =>
                             new LineItems()
                             {
@@ -121,13 +125,15 @@ namespace Data_Access_Logic
         public List<Order> GetOrdersListForStore(int p_storeId)
         {
             return _context.Orders
-            .Where(order => order.StoreFrontId == p_storeId).ToList();
+                .AsNoTracking()
+                .Where(order => order.StoreFrontId == p_storeId).ToList();
         }
 
         public List<Order> GetOrdersListForCustomer(string p_custId)
         {
             return _context.Orders
-            .Where(order => order.CustomerId == p_custId).ToList();
+                .AsNoTracking()
+                .Where(order => order.CustomerId == p_custId).ToList();
         }
 
         public Product GetProductByProductId(int p_productId)
@@ -158,8 +164,9 @@ namespace Data_Access_Logic
         public void PlaceOrder(Order p_order)
         {
             var customer = _context.Customers
-                                        .AsNoTracking()
+                                        //.AsNoTracking()
                                         .FirstOrDefault(cust => cust.Id == p_order.CustomerId);
+            
             customer.Order.Add(p_order);
             _context.SaveChanges();
         }
@@ -194,6 +201,7 @@ namespace Data_Access_Logic
             return _context.Orders
                         .Include("LineItems")
                         .Include("Customer")
+                        .AsNoTracking()
                         .FirstOrDefault(ord => ord.OrderId == p_orderId);
         }
     }

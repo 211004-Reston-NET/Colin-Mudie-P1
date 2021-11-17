@@ -78,7 +78,11 @@ namespace WebUI.Controllers
                         int indexToEdit = _orderToPlace.LineItems.IndexOf(itemToEdit);
                         _orderToPlace.LineItems[indexToEdit].Quantity++;
                     }
-                    _orderToPlace.LineItems.Add(item);
+                    else
+                    {
+                        _orderToPlace.LineItems.Add(item);
+                    }
+                    
                 }
                 _orderToPlace.CustomerId = User.Identity.GetUserId();
                 _orderToPlace.StoreFrontId = _currentOrder[0].StoreFrontId;
