@@ -34,11 +34,11 @@ Then I am able to edit any of my saved information or view any previous orders I
 
 ## Technologies
 * C#
-* ASP.Net MVC Framwork
-* ASP.Net Identity
+* ASP.NET MVC Framwork
+* ASP.NET Identity
 * MS SQL 
 * Microsoft Azure
-* Entity Framwork (code first approach)
+* ADO.NET Entity Framwork (code first approach)
 * LINQ
 * CI/CD Pipeline
 * SonorCloud Code Analysis
