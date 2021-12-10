@@ -1,40 +1,15 @@
-# Michigan Modular
+# Michigan Modular Web Store
 
 ## Published at Microsoft Azure App Services
 - https://michigan-modular-web-app.azurewebsites.net/
 
 ## Description
-Michigan Modular is a Store App which will allow a user to view a fake store selling Eurorack Modular Synthesizer Modules.
-The Database is MS SQL provided by Microsoft Azure.   
-You will be able to: 
-
-- Create an account
-- Edit account information
-- Login to an account
-- View Store locations
-- View inventory at a given store
-- Place order
-- view order history for both the customer and the store.
-- Replenish inventory of a given item at a store.
+Michigan Modular is a store app that helps customers purchase products from your business. Designed with functionality that would make virtual shopping much simpler! Customer features include: account creation, order placements, and order history. It also comes with admin functionality that let's store owners replenish inventory and view the specific store's order history! 
 
 
-## User Story
-Given I am a poor soul looking to get into an expensive hobby,   
-I want an app that allows me to purchase the resources needed to begin a modular journey. 
-When I open the app  
-Then I am asked to Log In to my own account or Create a new one   
-When I am logged in  
-Then I am able to select a store, search for products, or edit my account   
-When I select a store  
-Then I am able to view a store's list of products, place an order, view any previous orders for this store, or edit the current stock of any items.  
-When I select search for products  
-Then I am able to search for a list of products by using its category type (ie: Oscillator, Clock)  
-When I select edit my account   
-Then I am able to edit any of my saved information or view any previous orders I may have placed in the past
-
-## Technologies
-* C#
-* ASP.Net MVC Framwork
+## Technologies Used
+* C# 
+* ASP.Net MVC Framwork 
 * ASP.Net Identity
 * MS SQL 
 * Microsoft Azure
@@ -44,13 +19,42 @@ Then I am able to edit any of my saved information or view any previous orders I
 * SonorCloud Code Analysis
 * Xunit (unit testing)
 
+## Features
+- Create an account
+- Edit account information
+- Login to an account
+- View Store locations
+- View inventory at a given store
+- Place order
+- view order history for both the customer and the store.
+- Replenish inventory of a given item at a store.
 
-## Contributors
+## Getting Started
 
-[Colin Mudie](https://github.com/ColinMudie)
+To run the app locally,  
+[VS Studio Community Edition](https://visualstudio.microsoft.com/vs/community/) is required 
 
+- clone repo from repository:
+
+        git remote add origin https://github.com/211004-Reston-NET/Colin-Mudie-P1.git  
+
+- double click "Colin-Mudie-P1.sln"
+
+- in the solution manager, right click 'WebUI' and ensure that it is set to 'Startup Project'
+
+- in the terminal download any necessary dependencies with the command  
+
+        dotnet build 
+
+- click green play button play button to run app
+
+![Demo of running app locally](assets/WebStore_getting_started.gif)
+
+## Usage
+![Demo of app](assets/WebStore_walkthru.gif)
 
 ## Links
+[Live Link](https://michigan-modular-web-app.azurewebsites.net/)  
 [GitHub Repository](https://github.com/211004-Reston-NET/Colin-Mudie-P1)
 
 ## License
