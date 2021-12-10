@@ -8,16 +8,17 @@ Michigan Modular is a store app that helps customers purchase products from your
 
 
 ## Technologies Used
-* C# 
-* ASP.Net MVC Framwork 
-* ASP.Net Identity
-* MS SQL 
+* C# - v9
+* ASP.Net MVC Framwork - v5.0.12
+* ASP.Net Identity - v5.0.12
+* Entity Framwork - v5.0.12
+* Xunit - v2.4.1
+* MS SQL - v15.0
 * Microsoft Azure
-* Entity Framwork (code first approach)
 * LINQ
 * CI/CD Pipeline
 * SonorCloud Code Analysis
-* Xunit (unit testing)
+
 
 ## Features
 - Create an account
